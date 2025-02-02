@@ -14,11 +14,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lk.ijse.gdse.fitlifegym.bo.BOFactory;
+import lk.ijse.gdse.fitlifegym.bo.custom.*;
+import lk.ijse.gdse.fitlifegym.dao.custom.BookingDAO;
 import lk.ijse.gdse.fitlifegym.dao.custom.impl.*;
 import lk.ijse.gdse.fitlifegym.dto.*;
 import lk.ijse.gdse.fitlifegym.dto.tm.AttendanceTM;
 import lk.ijse.gdse.fitlifegym.dto.tm.BookingTM;
 import lk.ijse.gdse.fitlifegym.dto.tm.ClassTM;
+import lk.ijse.gdse.fitlifegym.entity.Booking;
 
 import java.io.IOException;
 import java.net.URL;
@@ -30,6 +34,14 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ClassManageViewController implements Initializable {
+
+    BookingBO bookingBO = (BookingBO) BOFactory.getInstance().getBO(BOFactory.BOType.BOOKING);
+    ClassBO classBO     = (ClassBO) BOFactory.getInstance().getBO(BOFactory.BOType.CLASS);
+    AttendanceBO attendanceBO = (AttendanceBO) BOFactory.getInstance().getBO(BOFactory.BOType.ATTENDANCE);
+    MemberBO memberBO = (MemberBO) BOFactory.getInstance().getBO(BOFactory.BOType.MEMBER);
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getInstance().getBO(BOFactory.BOType.EMPLOYEE);
+
+
 
     @FXML
     private Button BtnResetOfClassDetails;
@@ -226,7 +238,7 @@ public class ClassManageViewController implements Initializable {
     @FXML
     void cmbCustomerOnAction(ActionEvent event) throws SQLException {
 
-        EmployeeDTO employeeDTO = employeeDAOImpl.getEmployeeNameById(cmbEmployeeId.getSelectionModel().getSelectedItem());
+        EmployeeDTO employeeDTO = employeeBO.getEmployeeEntityById(cmbEmployeeId.getSelectionModel().getSelectedItem());
         if (employeeDTO!=null){
             lblEmployeeName.setText(employeeDTO.getName());
         }
@@ -273,7 +285,7 @@ public class ClassManageViewController implements Initializable {
 
     private void loadEmployeeId() throws SQLException {
 
-        ArrayList<EmployeeDTO> employeeDTOS = employeeDAOImpl.getAllEmployees();
+        ArrayList<EmployeeDTO> employeeDTOS = employeeBO.getAll();
         ObservableList<String> employeeIds  = FXCollections.observableArrayList();
 
         for (EmployeeDTO employeeDTO : employeeDTOS){
@@ -290,7 +302,7 @@ public class ClassManageViewController implements Initializable {
 
     private void loadClassTable() throws SQLException {
 
-        ArrayList<ClassDTO> classDTOS = classDAOImpl.getAllClassDetails();
+        ArrayList<ClassDTO> classDTOS = classBO.getAllClasses();
 
         ObservableList<ClassTM> classTMS = FXCollections.observableArrayList();
 
@@ -313,7 +325,7 @@ public class ClassManageViewController implements Initializable {
 
     private void loadNextClassId() throws SQLException {
 
-        String classId = classDAOImpl.getNextClassId();
+        String classId = classBO.generateNewClassId();
         lblClassId.setText(classId);
 
     }
@@ -336,7 +348,7 @@ public class ClassManageViewController implements Initializable {
         String className = txtClassName.getText();
         String classType = txtClassType.getText();
 
-        boolean isSaved = classDAOImpl.saveClasses(new ClassDTO(classId,employeeId,className,classType));
+        boolean isSaved = classBO.saveClasses(new ClassDTO(classId,employeeId,className,classType));
 
         if (isSaved){
             new Alert(Alert.AlertType.INFORMATION,"Class saved successfully...").show();
@@ -359,7 +371,7 @@ public class ClassManageViewController implements Initializable {
             Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
             if (optionalButtonType.isPresent() && optionalButtonType.get()==ButtonType.YES){
-                boolean isDelete = classDAOImpl.deleteClass(classId);
+                boolean isDelete = classBO.deleteClasses(classId);
 
                 if (isDelete){
                     new Alert(Alert.AlertType.INFORMATION,"class Deleted successfully...");

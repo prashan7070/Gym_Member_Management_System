@@ -102,149 +102,149 @@ public class SupplementSupplyDAOImpl implements SupplementSupplyDAO {
     }
 
 
-    public boolean savePendingSupplyOrder(SupplementDTO supplementDTO, SupplementSupplyDTO supplementSupplyDTO) throws SQLException {
-
-        Connection connection = DBConnection.getInstance().getConnection();
-
-        try {
-
-            connection.setAutoCommit(false);
-
-            boolean isExistsSupplement = supplementDAOImpl.isExistsSupplement(supplementDTO);
-
-
-            if (isExistsSupplement){
-
-                boolean isSupplementSupplyDetailsSaved = saveSupplementOrderSupplyDetails(supplementSupplyDTO);
-
-                if (isSupplementSupplyDetailsSaved){
-
-                    connection.commit();
-                    return true;
-
-
-                }
-
-
-            }else {
-
-                boolean isSupplementDetailsSaved = supplementDAOImpl.saveSupplementDetails(supplementDTO);
-
-                if (isSupplementDetailsSaved){
-
-                    boolean isSupplementSupplyDetailsSaved = saveSupplementOrderSupplyDetails(supplementSupplyDTO);
-
-                    if (isSupplementSupplyDetailsSaved){
-
-                        connection.commit();
-                        return true;
-
-
-                    }
-
-                }
-
-
-            }
-
-
-
-            connection.rollback();
-
-            return false;
-
-        } catch (Exception e){
-
-            e.printStackTrace();
-
-            connection.rollback();
-            return false;
-
-        } finally {
-            connection.setAutoCommit(true);
-        }
-
-
-
-
-    }
-
-
-
-
-    public boolean confirmSupplyOrder(SupplementSupplyDTO supplementSupplyDTO) throws SQLException {
-
-        Connection connection = DBConnection.getInstance().getConnection();
-
-        try {
-
-            connection.setAutoCommit(false);
-
-
-            boolean checkSupplementStatusIsUnavailable = supplementDAOImpl.isStatusUnavailable(supplementSupplyDTO);
-
-            if (checkSupplementStatusIsUnavailable){
-
-                boolean updateSupplementSupplyDetailsTable = updateSupplementSupplyDetails(supplementSupplyDTO);
-
-                if (updateSupplementSupplyDetailsTable){
-
-                    boolean updateSupplementDetailsTable = supplementDAOImpl.updateSupplementDetailsTable(supplementSupplyDTO);
-
-                    if (updateSupplementDetailsTable){
-
-                        connection.commit();
-                        return true;
-
-                    }
-
-
-                }
-
-
-            }else {
-
-
-                boolean isUpdateQtyInSupplement = supplementDAOImpl.isUpdateQtyInSupplement(supplementSupplyDTO);
-
-                if (isUpdateQtyInSupplement){
-
-                    boolean updateSupplementSupplyDetailsTable = updateSupplementSupplyDetails(supplementSupplyDTO);
-
-                    if (updateSupplementSupplyDetailsTable){
-
-                        connection.commit();
-                        return true;
-
-                    }
-
-
-                }
-
-
-            }
-
-
-            connection.rollback();
-
-            return false;
-
-
-        } catch (Exception e){
-
-            e.printStackTrace();
-
-            connection.rollback();
-            return false;
-
-        } finally {
-
-            connection.setAutoCommit(true);
-        }
-
-
-
-    }
+//    public boolean savePendingSupplyOrder(SupplementDTO supplementDTO, SupplementSupplyDTO supplementSupplyDTO) throws SQLException {
+//
+//        Connection connection = DBConnection.getInstance().getConnection();
+//
+//        try {
+//
+//            connection.setAutoCommit(false);
+//
+//            boolean isExistsSupplement = supplementDAOImpl.isExistsSupplement(supplementDTO);
+//
+//
+//            if (isExistsSupplement){
+//
+//                boolean isSupplementSupplyDetailsSaved = saveSupplementOrderSupplyDetails(supplementSupplyDTO);
+//
+//                if (isSupplementSupplyDetailsSaved){
+//
+//                    connection.commit();
+//                    return true;
+//
+//
+//                }
+//
+//
+//            }else {
+//
+//                boolean isSupplementDetailsSaved = supplementDAOImpl.saveSupplementDetails(supplementDTO);
+//
+//                if (isSupplementDetailsSaved){
+//
+//                    boolean isSupplementSupplyDetailsSaved = saveSupplementOrderSupplyDetails(supplementSupplyDTO);
+//
+//                    if (isSupplementSupplyDetailsSaved){
+//
+//                        connection.commit();
+//                        return true;
+//
+//
+//                    }
+//
+//                }
+//
+//
+//            }
+//
+//
+//
+//            connection.rollback();
+//
+//            return false;
+//
+//        } catch (Exception e){
+//
+//            e.printStackTrace();
+//
+//            connection.rollback();
+//            return false;
+//
+//        } finally {
+//            connection.setAutoCommit(true);
+//        }
+//
+//
+//
+//
+//    }
+
+
+
+
+//    public boolean confirmSupplyOrder(SupplementSupplyDTO supplementSupplyDTO) throws SQLException {
+//
+//        Connection connection = DBConnection.getInstance().getConnection();
+//
+//        try {
+//
+//            connection.setAutoCommit(false);
+//
+//
+//            boolean checkSupplementStatusIsUnavailable = supplementDAOImpl.isStatusUnavailable(supplementSupplyDTO);
+//
+//            if (checkSupplementStatusIsUnavailable){
+//
+//                boolean updateSupplementSupplyDetailsTable = updateSupplementSupplyDetails(supplementSupplyDTO);
+//
+//                if (updateSupplementSupplyDetailsTable){
+//
+//                    boolean updateSupplementDetailsTable = supplementDAOImpl.updateSupplementDetailsTable(supplementSupplyDTO);
+//
+//                    if (updateSupplementDetailsTable){
+//
+//                        connection.commit();
+//                        return true;
+//
+//                    }
+//
+//
+//                }
+//
+//
+//            }else {
+//
+//
+//                boolean isUpdateQtyInSupplement = supplementDAOImpl.isUpdateQtyInSupplement(supplementSupplyDTO);
+//
+//                if (isUpdateQtyInSupplement){
+//
+//                    boolean updateSupplementSupplyDetailsTable = updateSupplementSupplyDetails(supplementSupplyDTO);
+//
+//                    if (updateSupplementSupplyDetailsTable){
+//
+//                        connection.commit();
+//                        return true;
+//
+//                    }
+//
+//
+//                }
+//
+//
+//            }
+//
+//
+//            connection.rollback();
+//
+//            return false;
+//
+//
+//        } catch (Exception e){
+//
+//            e.printStackTrace();
+//
+//            connection.rollback();
+//            return false;
+//
+//        } finally {
+//
+//            connection.setAutoCommit(true);
+//        }
+//
+//
+//
+//    }
 
 
 

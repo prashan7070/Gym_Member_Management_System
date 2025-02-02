@@ -22,7 +22,7 @@ public interface SupplementDAO extends CrudDAO<Supplement> {
 
      boolean updateSupplementDetailsTable(SupplementSupply supplementSupply) throws SQLException;
 
-
+     boolean isUpdateQtyInSupplement(SupplementSupply supplementSupply) throws SQLException;
 
 
 //     boolean deleteEquipment(String equipmentId) throws SQLException;

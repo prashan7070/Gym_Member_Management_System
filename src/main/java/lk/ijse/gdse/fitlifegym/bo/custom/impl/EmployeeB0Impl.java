@@ -47,4 +47,10 @@ public class EmployeeB0Impl implements EmployeeBO {
         return employeeDAO.update(new Employee(employeeDTO.getEmployeeId(),employeeDTO.getName(),employeeDTO.getContactInfo(),employeeDTO.getEmail(),employeeDTO.getRole(),employeeDTO.getHireDate()));
 
     }
+
+    @Override
+    public EmployeeDTO getEmployeeEntityById(String employeeId) throws SQLException {
+        Employee employee =  employeeDAO.getEmployeeEntityById(employeeId);
+        return new EmployeeDTO(employee.getEmployeeId(),employee.getName(),employee.getContactInfo(),employee.getEmail(),employee.getRole(),employee.getHireDate());
+    }
 }

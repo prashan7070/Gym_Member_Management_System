@@ -15,18 +15,20 @@ public class WorkOutPlanDAOImpl implements WorkOutPlanDAO {
 
                 ResultSet rst = SQLUtil.execute("SELECT workOutPlanId FROM workoutplan ORDER BY workOutPlanId DESC LIMIT 1");
 
-                if (rst.next()){
+//                if (rst.next()){
+//
+//                    String lastId = rst.getString(1);
+//                    String subString = lastId.substring(1);
+//                    int i = Integer.parseInt(subString);
+//                    int newIndex = i+1;
+//                    return String.format("W%03d",newIndex);
+//
+//
+//                }
+//
+//                return "W001";
 
-                    String lastId = rst.getString(1);
-                    String subString = lastId.substring(1);
-                    int i = Integer.parseInt(subString);
-                    int newIndex = i+1;
-                    return String.format("W%03d",newIndex);
-
-
-                }
-
-                return "W001";
+                return rst.next() ? rst.getString(1) : null;
 
             }
 

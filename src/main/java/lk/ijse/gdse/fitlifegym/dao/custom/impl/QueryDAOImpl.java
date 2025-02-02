@@ -18,4 +18,5 @@ public class QueryDAOImpl implements QueryDAO {
 
         return null;
     }
+
 }

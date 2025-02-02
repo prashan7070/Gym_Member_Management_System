@@ -1,6 +1,5 @@
 package lk.ijse.gdse.fitlifegym.bo.custom.impl;
 
-import lk.ijse.gdse.fitlifegym.bo.custom.PaymentBO;
 import lk.ijse.gdse.fitlifegym.bo.custom.PaymentPlanBO;
 import lk.ijse.gdse.fitlifegym.dao.DAOFactory;
 import lk.ijse.gdse.fitlifegym.dao.custom.PaymentPlanDAO;
@@ -10,7 +9,7 @@ import lk.ijse.gdse.fitlifegym.entity.PaymentPlan;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class paymentPlanBOImpl implements PaymentPlanBO {
+public class PaymentPlanBOImpl implements PaymentPlanBO {
 
 
     PaymentPlanDAO paymentPlanDAO = (PaymentPlanDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.PAYMENT_PLAN);

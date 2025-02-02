@@ -16,16 +16,18 @@ public class DietPlanDAOImpl implements DietPlanDAO {
 
                 ResultSet rst = SQLUtil.execute("SELECT dietPlanId FROM dietplan ORDER BY dietPlanId DESC LIMIT 1");
 
-                if (rst.next()){
-                    String lastId = rst.getString(1);
-                    String subString = lastId.substring(1);
-                    int i = Integer.parseInt(subString);
-                    int newIndex = i+1;
-                    return String.format("D%03d",newIndex);
+//                if (rst.next()){
+//                    String lastId = rst.getString(1);
+//                    String subString = lastId.substring(1);
+//                    int i = Integer.parseInt(subString);
+//                    int newIndex = i+1;
+//                    return String.format("D%03d",newIndex);
+//
+//                }
+//
+//                return "D001";
 
-                }
-
-                return "D001";
+                return rst.next() ? rst.getString(1) : null;
 
 
             }

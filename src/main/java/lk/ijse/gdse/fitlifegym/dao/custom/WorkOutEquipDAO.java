@@ -14,6 +14,4 @@ public interface WorkOutEquipDAO extends CrudDAO<WorkOutEquip> {
 
 
 
-
-
 }
