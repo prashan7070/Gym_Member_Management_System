@@ -1,0 +1,24 @@
+/* Style for all tabs (unselected tabs) */
+.tab-pane .tab {
+    -fx-background-color: #E0E0E0;           /* Background color for unselected tabs */
+    -fx-text-fill: #333333;                  /* Text color for unselected tabs */
+    -fx-border-color: #B0B0B0;               /* Border color for unselected tabs */
+    -fx-border-width: 0 0 1px 0;             /* Bottom border for unselected tabs */
+}
+
+/* Style for the selected (highlighted) tab */
+.tab-pane .tab:selected {
+    -fx-background-color:  #34ace0;           /* Highlight color for selected tab */
+    -fx-text-fill: white;                    /* Text color for selected tab */
+    -fx-font-weight: bold;                   /* Bold text for selected tab */
+    -fx-border-color: #1e627d;               /* Border color for selected tab */
+    -fx-border-width: 0 0 2px 0;             /* Thicker bottom border for selected tab */
+}
+
+/* Optional: Hover effect for better visual feedback */
+.tab-pane .tab:hover {
+    -fx-background-color: #D3D3D3;           /* Slightly darker color when hovered */
+    -fx-border-color: #A0A0A0;               /* Border color when hovered */
+}
+
+/*#1e627d*/

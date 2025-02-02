@@ -1,0 +1,110 @@
+/* General Styling */
+.root {
+    -fx-font-family: 'Arial', sans-serif;
+    -fx-font-size: 14px;
+    -fx-background-color: #20232a; /* Slightly dark background for the main app */
+    -fx-text-fill: #ffffff; /* Default text color */
+}
+
+/* Dashboard Buttons */
+#dashboard-button {
+    -fx-background-color: linear-gradient(to bottom, #4a90e2, #357ABD); /* Blue gradient */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;
+}
+#dashboard-button:hover {
+    -fx-background-color: linear-gradient(to bottom, #357ABD, #2a6ba4); /* Darker blue on hover */
+}
+
+/* Action Buttons: Save, Update, Delete */
+.action-button-save {
+    -fx-background-color: #28a745; /* Green */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;
+}
+.action-button-update {
+    -fx-background-color: #ffc107; /* Amber */
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;
+}
+.action-button-delete {
+    -fx-background-color: #dc3545; /* Red */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;
+}
+.action-button-save:hover, .action-button-update:hover, .action-button-delete:hover {
+    -fx-opacity: 0.8; /* Slightly transparent on hover */
+}
+
+/* Labels */
+.label {
+    -fx-text-fill: #ffffff; /* White text for dark background */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* Text Fields */
+.text-field {
+    -fx-background-color: #2e3b47; /* Dark background */
+    -fx-text-fill: white; /* White text */
+    -fx-border-color: #4a90e2; /* Blue border */
+    -fx-border-width: 1px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 5 10;
+}
+.text-field:focused {
+    -fx-border-color: #28a745; /* Green border when focused */
+}
+
+/* Tables */
+.table-view {
+    -fx-background-color: #2e3b47; /* Dark table background */
+    -fx-table-cell-border-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+}
+.table-view .column-header-background {
+    -fx-background-color: #4a90e2; /* Blue header background */
+}
+.table-view .column-header, .table-view .column-header .label {
+    -fx-text-fill: white; /* White header text */
+}
+.table-row-cell:odd {
+    -fx-background-color: #232a34; /* Alternating row color */
+}
+.table-row-cell:even {
+    -fx-background-color: #2e3b47;
+}
+
+/* Hover Effect for Table Rows */
+.table-row-cell:hover {
+    -fx-background-color: #4a90e2; /* Highlight on hover */
+    -fx-text-fill: white;
+}
+
+/* Buttons Inside Tables (Like in Popup) */
+.table-button {
+    -fx-background-color: #4a90e2;
+    -fx-text-fill: white;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 5 10;
+    -fx-cursor: hand;
+}
+.table-button:hover {
+    -fx-opacity: 0.8;
+}

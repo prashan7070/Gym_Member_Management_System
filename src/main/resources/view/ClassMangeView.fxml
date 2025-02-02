@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="ClassManagePanelAnchor" prefHeight="606.0" prefWidth="673.0" style="-fx-background-color: #34ace0;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.fitlifegym.controller.ClassManageViewController">
+   <children>
+      <TabPane fx:id="MainTabPane" prefHeight="606.0" prefWidth="673.0" stylesheets="@../CSS/tabStyle.css" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="classDetailsTab" text="Class Details">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox prefHeight="612.0" prefWidth="673.0" spacing="20.0" style="-fx-background-color: #34ace0;">
+                           <children>
+                              <VBox prefHeight="142.0" prefWidth="633.0" spacing="7.0">
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="160.0" prefHeight="27.2">
+                                       <children>
+                                          <Label prefWidth="150.0" text="Class Id" HBox.hgrow="ALWAYS">
+                                             <font>
+                                                <Font name="Calibri" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="lblClassId" layoutX="10.0" layoutY="15.0" maxWidth="1.7976931348623157E308" prefHeight="18.0" HBox.hgrow="ALWAYS">
+                                             <font>
+                                                <Font name="Calibri" size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                       <children>
+                                          <Label prefHeight="17.0" prefWidth="145.0" text="Employee Id" HBox.hgrow="ALWAYS">
+                                             <font>
+                                                <Font name="Calibri" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <ComboBox fx:id="cmbEmployeeId" onAction="#cmbCustomerOnAction" prefWidth="150.0" style="-fx-background-color: #ffffff; -fx-border-color: #7367F0; -fx-border-width: 0 0 1px 0;" />
+                                          <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="118.0" text="Employee Name">
+                                             <font>
+                                                <Font name="Calibri" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="lblEmployeeName" alignment="CENTER" prefHeight="28.0" prefWidth="204.0" style="-fx-background-color: #fff; -fx-border-color: #7367F0; -fx-border-width: 0 0 1px 0;" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0">
+                                       <children>
+                                          <Label prefWidth="150.0" text="Class Name" HBox.hgrow="ALWAYS">
+                                             <font>
+                                                <Font name="Calibri" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="txtClassName" style="-fx-background-color: #fff; -fx-border-color: #7367F0; -fx-border-width: 0 0 1px 0;" HBox.hgrow="ALWAYS">
+                                             <font>
+                                                <Font name="Calibri" size="14.0" />
+                                             </font>
+                                          </TextField>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="48.0">
+                                       <children>
+                                          <Label prefWidth="150.0" text="Class Type" HBox.hgrow="ALWAYS">
+                                             <font>
+                                                <Font name="Calibri" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="txtClassType" style="-fx-background-color: #fff; -fx-border-color: #7367F0; -fx-border-width: 0 0 1px 0;" HBox.hgrow="ALWAYS">
+                                             <font>
+                                                <Font name="Calibri" size="14.0" />
+                                             </font>
+                                          </TextField>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <HBox alignment="CENTER_RIGHT" prefHeight="22.0" prefWidth="633.0" spacing="30.0">
+                                 <children>
+                                    <Button fx:id="btnViewEmployee" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btnViewEmployeeOnAction" prefHeight="0.0" prefWidth="633.0" style="-fx-background-color: #293e75;" text="View  Employees" textFill="WHITE" HBox.hgrow="ALWAYS">
+                                       <font>
+                                          <Font name="Calibri Bold" size="14.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="CLOSED_HAND" />
+                                       </cursor>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_RIGHT" layoutX="30.0" layoutY="204.0" prefHeight="41.0" prefWidth="633.0" spacing="30.0">
+                                 <children>
+                                    <Button fx:id="BtnResetOfClassDetails" layoutX="290.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#BtnResetOfClassDetailsOnAction" prefWidth="80.0" style="-fx-background-color: #e74c3c;" text="Reset" textFill="WHITE" HBox.hgrow="ALWAYS">
+                                       <font>
+                                          <Font name="Calibri Bold" size="14.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="CLOSED_HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Button fx:id="btnDeleteClassOfClassDetails" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btnDeleteClassOfClassDetailsOnAction" prefHeight="27.0" prefWidth="92.0" style="-fx-background-color: #c0392b;" text="Delete" textFill="WHITE" HBox.hgrow="ALWAYS">
+                                       <font>
+                                          <Font name="Calibri Bold" size="14.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="CLOSED_HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Button fx:id="btnUpdateClass" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btnUpdateClassOnAction" prefWidth="80.0" style="-fx-background-color: #293e75;" text="Update Class" textFill="WHITE" HBox.hgrow="ALWAYS">
+                                       <font>
+                                          <Font name="Calibri Bold" size="14.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="CLOSED_HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Button fx:id="btnAddClass" layoutX="462.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btnAddClassOnAction" prefHeight="27.0" prefWidth="106.0" style="-fx-background-color: #7367F0;" text="Add Class" textFill="WHITE">
+                                       <font>
+                                          <Font name="Calibri Bold" size="14.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="CLOSED_HAND" />
+                                       </cursor>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <TableView fx:id="tblClassDetails" onMouseClicked="#onClickClassTable" prefHeight="290.0" prefWidth="633.0" VBox.vgrow="ALWAYS">
+                                 <columns>
+                                    <TableColumn fx:id="colClassId" prefWidth="75.0" text="Class Id" />
+                                    <TableColumn fx:id="colEmployeeId" prefWidth="75.0" text="Employee Id" />
+                                    <TableColumn fx:id="colClassName" prefWidth="75.0" text="Class Name" />
+                                    <TableColumn fx:id="colClassType" prefWidth="75.0" text="Class Type" />
+                                 </columns>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                              </TableView>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="attendDetailsTab" text="Attendance Details">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <VBox prefHeight="612.0" prefWidth="673.0" spacing="20.0" style="-fx-background-color: #34ace0;">
+                                 <children>
+                                    <VBox prefHeight="151.0" prefWidth="633.0" spacing="7.0">
+                                       <children>
+                                          <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="160.0" prefHeight="27.2">
+                                             <children>
+                                                <Label prefWidth="150.0" text="Attendance Id" HBox.hgrow="ALWAYS">
+                                                   <font>
+                                                      <Font name="Calibri" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="lblAttendanceId" layoutX="10.0" layoutY="15.0" maxWidth="1.7976931348623157E308" prefHeight="18.0" HBox.hgrow="ALWAYS">
+                                                   <font>
+                                                      <Font name="Calibri" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="43.0" prefHeight="26.0" prefWidth="642.0" spacing="5.0">
+                                             <children>
+                                                <Label prefHeight="17.0" prefWidth="145.0" text="Class Id" HBox.hgrow="ALWAYS">
+                                                   <font>
+                                                      <Font name="Calibri" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <ComboBox fx:id="cmbClassIdOfAtteDetails" onAction="#cmbClassIdOfAtteDetailsOnAction" prefHeight="26.0" prefWidth="128.0" style="-fx-background-color: #ffffff; -fx-border-color: #7367F0; -fx-border-width: 0 0 1px 0;" />
+                                                <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="96.0" text="Class Name">
+                                                   <font>
+                                                      <Font name="Calibri" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="lblClassNameOfAttedDetails" alignment="CENTER" prefHeight="26.0" prefWidth="247.0" style="-fx-background-color: #fff; -fx-border-color: #7367F0; -fx-border-width: 0 0 1px 0;" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                             <children>
+                                                <Label prefHeight="17.0" prefWidth="144.0" text="Member Id" HBox.hgrow="ALWAYS">
+                                                   <font>
+                                                      <Font name="Calibri" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <ComboBox fx:id="cmbMemberId" onAction="#cmbMemberIdOnAction" prefHeight="26.0" prefWidth="130.0" style="-fx-background-color: #ffffff; -fx-border-color: #7367F0; -fx-border-width: 0 0 1px 0;" />
+                                                <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="96.0" text="Member Name">
+                                                   <font>
+                                                      <Font name="Calibri" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="lblMemberName" alignment="CENTER" prefHeight="26.0" prefWidth="247.0" style="-fx-background-color: #fff; -fx-border-color: #7367F0; -fx-border-width: 0 0 1px 0;" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0">
+                                             <children>
+                                                <Label prefHeight="17.0" prefWidth="149.0" text="Date" HBox.hgrow="ALWAYS">
+                                                   <font>
+                                                      <Font name="Calibri" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <DatePicker fx:id="lblAttendDateOfAttedDetails" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="48.0" prefHeight="28.0" prefWidth="613.0" spacing="5.0">
+                                             <children>
+                                                <Label prefHeight="17.0" prefWidth="146.0" text="Status" HBox.hgrow="ALWAYS">
+                                                   <font>
+                                                      <Font name="Calibri" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <ComboBox fx:id="cmbStatus" onAction="#cmbStatusOnAction" prefHeight="26.0" prefWidth="130.0" style="-fx-background-color: #ffffff; -fx-border-color: #7367F0; -fx-border-width: 0 0 1px 0;" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                    <HBox alignment="CENTER_RIGHT" layoutX="30.0" layoutY="204.0" prefHeight="41.0" prefWidth="633.0" spacing="30.0">
+                                       <children>
+                                          <Button fx:id="btnResetOfAttedDetails" layoutX="290.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#resetOnAction" prefWidth="80.0" style="-fx-background-color: #e74c3c;" text="Reset" textFill="WHITE" HBox.hgrow="ALWAYS">
+                                             <font>
+                                                <Font name="Calibri Bold" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="CLOSED_HAND" />
+                                             </cursor>
+                                          </Button>
+                                          <Button fx:id="btnDeleteOfAttedDetails" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btnDeleteOfAttedDetailsOnAction" prefHeight="27.0" prefWidth="92.0" style="-fx-background-color: #c0392b;" text="Delete" textFill="WHITE" HBox.hgrow="ALWAYS">
+                                             <font>
+                                                <Font name="Calibri Bold" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="CLOSED_HAND" />
+                                             </cursor>
+                                          </Button>
+                                          <Button fx:id="btnUpdateOfAttedDetails" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btnUpdateOfAttedDetailsOnAction" prefWidth="80.0" style="-fx-background-color: #293e75;" text="Update" textFill="WHITE" HBox.hgrow="ALWAYS">
+                                             <font>
+                                                <Font name="Calibri Bold" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="CLOSED_HAND" />
+                                             </cursor>
+                                          </Button>
+                                          <Button fx:id="btnMark" layoutX="462.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btnMarkOnAction" prefHeight="27.0" prefWidth="106.0" style="-fx-background-color: #7367F0;" text="Mark" textFill="WHITE">
+                                             <font>
+                                                <Font name="Calibri Bold" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="CLOSED_HAND" />
+                                             </cursor>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                    <TableView fx:id="tblAttendaceDetails" onMouseClicked="#onClickAttendanceTable" prefHeight="290.0" prefWidth="633.0" VBox.vgrow="ALWAYS">
+                                       <columns>
+                                          <TableColumn fx:id="colAttendaceId" prefWidth="75.0" text="Attendance Id" />
+                                          <TableColumn fx:id="colClassIdOfOfAttedDetails" prefWidth="75.0" text="Class Id" />
+                                          <TableColumn fx:id="colMemberId" prefWidth="75.0" text="Member Id" />
+                                          <TableColumn fx:id="colDateOfAttedDetails" prefWidth="75.0" text="Date" />
+                                          <TableColumn fx:id="colStatus" prefWidth="75.0" text="Status" />
+                                       </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                    </TableView>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                                 </padding>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab fx:id="bookingDetailsTab" text="Booking Details">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox prefHeight="612.0" prefWidth="673.0" spacing="20.0" style="-fx-background-color: #34ace0;">
+                                       <children>
+                                          <VBox prefHeight="151.0" prefWidth="633.0" spacing="8.0">
+                                             <children>
+                                                <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="160.0" prefHeight="27.2">
+                                                   <children>
+                                                      <Label prefWidth="150.0" text="Booking Id" HBox.hgrow="ALWAYS">
+                                                         <font>
+                                                            <Font name="Calibri" size="14.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label fx:id="lblBookingId" layoutX="10.0" layoutY="15.0" maxWidth="1.7976931348623157E308" prefHeight="18.0" HBox.hgrow="ALWAYS">
+                                                         <font>
+                                                            <Font name="Calibri" size="14.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </HBox>
+                                                <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="43.0" spacing="5.0">
+                                                   <children>
+                                                      <Label prefHeight="17.0" prefWidth="145.0" text="Class Id" HBox.hgrow="ALWAYS">
+                                                         <font>
+                                                            <Font name="Calibri" size="14.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <ComboBox fx:id="cmbClassIdOfBookingDetails" onAction="#cmbClassIdOnAction" prefWidth="150.0" style="-fx-background-color: #ffffff; -fx-border-color: #7367F0; -fx-border-width: 0 0 1px 0;" />
+                                                      <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="96.0" text="Class Name">
+                                                         <font>
+                                                            <Font name="Calibri" size="14.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label fx:id="lblClassNameOfBookingDetails" alignment="CENTER" prefHeight="26.0" prefWidth="247.0" style="-fx-background-color: #fff; -fx-border-color: #7367F0; -fx-border-width: 0 0 1px 0;" />
+                                                   </children>
+                                                </HBox>
+                                                <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" spacing="5.0">
+                                                   <children>
+                                                      <Label prefHeight="17.0" prefWidth="139.0" text="Date" HBox.hgrow="ALWAYS">
+                                                         <font>
+                                                            <Font name="Calibri" size="14.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <DatePicker fx:id="lblBookingDateOfBookingDetails" prefHeight="25.0" prefWidth="247.0" />
+                                                   </children>
+                                                </HBox>
+                                                <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="48.0" prefHeight="28.0" prefWidth="613.0" spacing="5.0">
+                                                   <children>
+                                                      <Label prefHeight="17.0" prefWidth="139.0" text="Time" HBox.hgrow="ALWAYS">
+                                                         <font>
+                                                            <Font name="Calibri" size="14.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <TextField fx:id="lblTime" prefHeight="28.0" prefWidth="247.0" promptText="10:30  |  22:30" style="-fx-background-color: #fff; -fx-border-color: #7367F0; -fx-border-width: 0 0 1px 0;">
+                                                         <font>
+                                                            <Font name="Calibri" size="14.0" />
+                                                         </font>
+                                                      </TextField>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                          <HBox alignment="CENTER_RIGHT" layoutX="30.0" layoutY="204.0" prefHeight="41.0" prefWidth="633.0" spacing="30.0">
+                                             <children>
+                                                <Button fx:id="btnResetOfBookingDetails" layoutX="290.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btnResetOfBookingDetailsOnAction" prefWidth="80.0" style="-fx-background-color: #e74c3c;" text="Reset" textFill="WHITE" HBox.hgrow="ALWAYS">
+                                                   <font>
+                                                      <Font name="Calibri Bold" size="14.0" />
+                                                   </font>
+                                                   <cursor>
+                                                      <Cursor fx:constant="CLOSED_HAND" />
+                                                   </cursor>
+                                                </Button>
+                                                <Button fx:id="btnUpdateBooking" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btnUpdateBookingOnAction" prefHeight="27.0" prefWidth="92.0" style="-fx-background-color: #c0392b;" text="Update Booking" textFill="WHITE" HBox.hgrow="ALWAYS">
+                                                   <font>
+                                                      <Font name="Calibri Bold" size="14.0" />
+                                                   </font>
+                                                   <cursor>
+                                                      <Cursor fx:constant="CLOSED_HAND" />
+                                                   </cursor>
+                                                </Button>
+                                                <Button fx:id="btnCancelBooking" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btnCancelBookingOnAction" prefWidth="80.0" style="-fx-background-color: #293e75;" text="Cancel Booking" textFill="WHITE" HBox.hgrow="ALWAYS">
+                                                   <font>
+                                                      <Font name="Calibri Bold" size="14.0" />
+                                                   </font>
+                                                   <cursor>
+                                                      <Cursor fx:constant="CLOSED_HAND" />
+                                                   </cursor>
+                                                </Button>
+                                                <Button fx:id="btnPlaceBooking" layoutX="462.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btnPlaceBookingOnAction" prefHeight="27.0" prefWidth="106.0" style="-fx-background-color: #7367F0;" text="Place Booking" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Calibri Bold" size="14.0" />
+                                                   </font>
+                                                   <cursor>
+                                                      <Cursor fx:constant="CLOSED_HAND" />
+                                                   </cursor>
+                                                </Button>
+                                             </children>
+                                          </HBox>
+                                          <TableView fx:id="tblBookingDetails" onMouseClicked="#onClickBookingTable" prefHeight="360.0" prefWidth="614.0" VBox.vgrow="ALWAYS">
+                                             <columns>
+                                                <TableColumn fx:id="colBookingId" prefWidth="75.0" text="Booking Id" />
+                                                <TableColumn fx:id="colClassIdOfBookingDetails" prefWidth="75.0" text="Class Id" />
+                                                <TableColumn fx:id="colDateOfBookingDetails" prefWidth="75.0" text="Date" />
+                                                <TableColumn fx:id="colTime" prefWidth="75.0" text="Time" />
+                                             </columns>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                          </TableView>
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                                       </padding>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

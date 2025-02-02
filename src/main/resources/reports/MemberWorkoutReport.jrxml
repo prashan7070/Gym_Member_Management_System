@@ -1,0 +1,225 @@
+<!-- Created with Jaspersoft Studio version 7.0.0.final using JasperReports Library version 7.0.0-b478feaa9aab4375eba71de77b4ca138ad2f62aa  -->
+<jasperReport name="MemberWorkoutReport" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="187ad5b3-e5b6-4f67-83bd-ee5f20f9b626">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="gymDBConnection"/>
+	<parameter name="P_Member_Id" class="java.lang.String"/>
+	<parameter name="P_Date" class="java.lang.String"/>
+	<query language="SQL"><![CDATA[SELECT
+    m.name,
+    m.email,
+    m.contactInfo,
+    wp.workOutPlanId,
+    wp.startDate,
+    wp.endDate,
+    wp.description,
+    dp.dietPlanId,
+    dp.startDate AS dietStartDate,
+    dp.endDate AS dietEndDate,
+    dp.description AS dietDescription,
+    we.usageFrequency,
+    we.durationPerSession,
+    we.instructions
+FROM
+    member m
+        LEFT JOIN
+    workOutPlan wp ON m.memberId = wp.memberId
+        LEFT JOIN
+    dietPlan dp ON m.memberId = dp.memberId
+        LEFT JOIN
+    workoutequipment we ON wp.workOutPlanId = we.workOutPlanId
+WHERE
+    m.memberId = $P{P_Member_Id}]]></query>
+	<field name="name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="name"/>
+		<property name="com.jaspersoft.studio.field.label" value="name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="member"/>
+	</field>
+	<field name="email" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="email"/>
+		<property name="com.jaspersoft.studio.field.label" value="email"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="member"/>
+	</field>
+	<field name="contactInfo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="contactInfo"/>
+		<property name="com.jaspersoft.studio.field.label" value="contactInfo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="member"/>
+	</field>
+	<field name="workOutPlanId" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="workOutPlanId"/>
+		<property name="com.jaspersoft.studio.field.label" value="workOutPlanId"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="workoutplan"/>
+	</field>
+	<field name="startDate" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="startDate"/>
+		<property name="com.jaspersoft.studio.field.label" value="startDate"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="workoutplan"/>
+	</field>
+	<field name="endDate" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="endDate"/>
+		<property name="com.jaspersoft.studio.field.label" value="endDate"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="workoutplan"/>
+	</field>
+	<field name="description" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="description"/>
+		<property name="com.jaspersoft.studio.field.label" value="description"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="workoutplan"/>
+	</field>
+	<field name="dietPlanId" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="dietPlanId"/>
+		<property name="com.jaspersoft.studio.field.label" value="dietPlanId"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dietplan"/>
+	</field>
+	<field name="dietStartDate" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="startDate"/>
+		<property name="com.jaspersoft.studio.field.label" value="dietStartDate"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dietplan"/>
+	</field>
+	<field name="dietEndDate" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="endDate"/>
+		<property name="com.jaspersoft.studio.field.label" value="dietEndDate"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dietplan"/>
+	</field>
+	<field name="dietDescription" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="description"/>
+		<property name="com.jaspersoft.studio.field.label" value="dietDescription"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dietplan"/>
+	</field>
+	<field name="usageFrequency" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="usageFrequency"/>
+		<property name="com.jaspersoft.studio.field.label" value="usageFrequency"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="workoutequipment"/>
+	</field>
+	<field name="durationPerSession" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="durationPerSession"/>
+		<property name="com.jaspersoft.studio.field.label" value="durationPerSession"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="workoutequipment"/>
+	</field>
+	<field name="instructions" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="instructions"/>
+		<property name="com.jaspersoft.studio.field.label" value="instructions"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="workoutequipment"/>
+	</field>
+	<background splitType="Stretch"/>
+	<title height="50" splitType="Stretch">
+		<element kind="staticText" uuid="488236b5-95eb-40ef-b9c0-d4ca8fc014ab" x="190" y="10" width="170" height="30" fontSize="16.0" bold="true">
+			<text><![CDATA[Member WorkOutPlan Report]]></text>
+		</element>
+	</title>
+	<pageHeader height="109" splitType="Stretch">
+		<element kind="staticText" uuid="1cd0cc04-5f23-4677-b0aa-cdb8e365add0" x="10" y="6" width="81" height="23" fontSize="12.0" vTextAlign="Middle">
+			<text><![CDATA[Name    :]]></text>
+		</element>
+		<element kind="staticText" uuid="6dc8fe82-9d02-432d-a591-3c0cbbd39006" x="10" y="40" width="81" height="20" fontSize="12.0" vTextAlign="Middle">
+			<text><![CDATA[Email   :]]></text>
+		</element>
+		<element kind="staticText" uuid="dfca3b9d-11be-4571-a3bb-85ebcc60a32c" x="10" y="71" width="82" height="26" fontSize="12.0" vTextAlign="Middle">
+			<text><![CDATA[Contact Info   :]]></text>
+		</element>
+		<element kind="textField" uuid="f86ca675-bffb-4494-8351-96dc636f70ca" x="110" y="6" width="100" height="23" vTextAlign="Middle">
+			<expression><![CDATA[$F{name}]]></expression>
+		</element>
+		<element kind="textField" uuid="9af8dba2-8070-4dfe-a6f5-89f93c0005b4" x="110" y="40" width="100" height="20" vTextAlign="Middle">
+			<expression><![CDATA[$F{email}]]></expression>
+		</element>
+		<element kind="textField" uuid="2bf62494-9639-44f9-81d7-64c9613b7eb5" x="110" y="69" width="100" height="21" vTextAlign="Middle">
+			<expression><![CDATA[$F{contactInfo}]]></expression>
+		</element>
+		<element kind="staticText" uuid="e1c47116-64f1-45e8-8f44-66ff3a4a2d52" x="352" y="6" width="78" height="23" fontSize="12.0" hTextAlign="Right" vTextAlign="Middle">
+			<text><![CDATA[Date   :]]></text>
+		</element>
+		<element kind="textField" uuid="f4889f38-9f31-4293-9988-a46b600107b9" x="440" y="6" width="90" height="23" fontSize="11.0" hTextAlign="Center" vTextAlign="Middle">
+			<expression><![CDATA[$P{P_Date}]]></expression>
+		</element>
+		<element kind="staticText" uuid="31959dba-2755-48d0-9bb4-0054173ef01a" x="350" y="40" width="80" height="30" fontSize="12.0" hTextAlign="Right" vTextAlign="Middle">
+			<text><![CDATA[Member Id   :]]></text>
+		</element>
+		<element kind="textField" uuid="1b4205a7-1b9f-49a3-85e9-b3ad7e7493c5" x="440" y="41" width="90" height="28" fontSize="11.0" vTextAlign="Middle">
+			<expression><![CDATA[$P{P_Member_Id}]]></expression>
+		</element>
+	</pageHeader>
+	<columnHeader height="22" splitType="Stretch"/>
+	<detail>
+		<band height="297" splitType="Stretch">
+			<element kind="staticText" uuid="ce073760-faf1-48ee-bcf1-42e75bc2f255" x="10" y="10" width="100" height="20" fontSize="12.0" hTextAlign="Left" vTextAlign="Middle">
+				<text><![CDATA[WorkOutPlan Id   :]]></text>
+			</element>
+			<element kind="staticText" uuid="07791e7a-ca0e-4a2d-beb4-1449319de615" x="220" y="10" width="70" height="20" fontSize="12.0" vTextAlign="Middle">
+				<text><![CDATA[Start Date  :]]></text>
+			</element>
+			<element kind="textField" uuid="b571831f-43a2-42fb-9f36-2953a92aa3bc" x="120" y="10" width="90" height="20" hTextAlign="Left" vTextAlign="Middle">
+				<expression><![CDATA[$F{workOutPlanId}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="47256953-b15d-4268-942d-956739c12433"/>
+			</element>
+			<element kind="textField" uuid="9cfc96b5-a673-43f5-b352-3899b7224c49" x="300" y="10" width="90" height="20" vTextAlign="Middle">
+				<expression><![CDATA[$F{startDate}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="90d6e258-0fed-4e73-bb88-262692c3c47a"/>
+			</element>
+			<element kind="staticText" uuid="09195bbe-70b5-4507-b722-2342c21928e5" x="400" y="10" width="60" height="21" fontSize="12.0" vTextAlign="Middle">
+				<text><![CDATA[End date :]]></text>
+			</element>
+			<element kind="textField" uuid="0eea8464-8fea-4f9d-902f-20023e524cbf" x="470" y="10" width="80" height="21" vTextAlign="Middle">
+				<expression><![CDATA[$F{endDate}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b040a831-a56f-4195-ae47-aebe1c5f8393"/>
+			</element>
+			<element kind="staticText" uuid="76036fcb-1bd9-49d0-9d67-30f18be985ba" x="10" y="50" width="170" height="30" fontSize="12.0" vTextAlign="Middle">
+				<text><![CDATA[ WorkOut Plan Description     :]]></text>
+			</element>
+			<element kind="textField" uuid="70b31798-79af-4af7-b9fb-bac373d98bb9" x="190" y="50" width="350" height="30" fontSize="12.0" hTextAlign="Left" vTextAlign="Middle">
+				<expression><![CDATA[$F{description}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="617ad1d7-8b51-4838-8a86-7095280acfb1"/>
+			</element>
+			<element kind="staticText" uuid="a020820e-0fe8-42c2-a8b9-c0a53ba20019" x="10" y="118" width="82" height="20" fontSize="12.0" vTextAlign="Middle">
+				<text><![CDATA[Diet Plan Id   :]]></text>
+			</element>
+			<element kind="textField" uuid="96903b6a-ac2c-49f2-b442-649f1abd6d64" x="100" y="118" width="90" height="20" vTextAlign="Middle">
+				<expression><![CDATA[$F{dietPlanId}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="93685f40-05d5-41d7-a465-65536a812b34"/>
+			</element>
+			<element kind="staticText" uuid="20f4b89f-b948-4d16-950c-e9dfc32b9171" x="220" y="118" width="70" height="20" fontSize="12.0" vTextAlign="Middle">
+				<text><![CDATA[Start Date  :]]></text>
+			</element>
+			<element kind="textField" uuid="5ed680ed-9b4d-4c2c-87a1-1cbfc8c9361b" x="300" y="118" width="90" height="20" vTextAlign="Middle">
+				<expression><![CDATA[$F{dietStartDate}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8be6d63f-a9a9-44ba-9435-39844161332e"/>
+			</element>
+			<element kind="staticText" uuid="47497c82-e23a-403a-b13d-a1fb8cb6fb7e" x="400" y="120" width="60" height="18" fontSize="12.0">
+				<text><![CDATA[End Date :]]></text>
+			</element>
+			<element kind="textField" uuid="dc6e01f6-5a9e-41ad-ad87-563601778746" x="470" y="118" width="80" height="20" vTextAlign="Middle">
+				<expression><![CDATA[$F{dietEndDate}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="32cc54a2-99f7-4af3-b30c-9bacf9f3361c"/>
+			</element>
+			<element kind="staticText" uuid="481373f7-e4de-4fb1-a846-233ec48d0e89" x="10" y="160" width="170" height="30" fontSize="12.0" vTextAlign="Middle">
+				<text><![CDATA[Diet Plan Description              :]]></text>
+			</element>
+			<element kind="textField" uuid="9a817ecb-a80d-467b-80c9-c7ebcd9bb8a5" x="190" y="160" width="350" height="30" fontSize="12.0" vTextAlign="Middle">
+				<expression><![CDATA[$F{dietDescription}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="683616a2-5b6b-435f-a6a4-e63ce041eaab"/>
+			</element>
+			<element kind="staticText" uuid="1672a17f-9f48-41c4-8737-61311065d03c" x="10" y="206" width="116" height="24" fontSize="12.0" vTextAlign="Middle">
+				<text><![CDATA[Usage Frequency  :]]></text>
+			</element>
+			<element kind="textField" uuid="dec6c4dc-7b4a-47be-99ae-170065487845" x="140" y="206" width="120" height="24" fontSize="11.0" vTextAlign="Middle">
+				<expression><![CDATA[$F{usageFrequency}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ce040080-5eff-4039-92e3-29a4abf6700d"/>
+			</element>
+			<element kind="staticText" uuid="8cda68e1-9356-4c59-a156-4797c082fdc3" x="293" y="206" width="130" height="24" fontSize="12.0" vTextAlign="Middle">
+				<text><![CDATA[Duration Per Session  :]]></text>
+			</element>
+			<element kind="textField" uuid="8fffc0c8-94d2-409b-87d7-bd5766cf82f3" x="430" y="204" width="120" height="30" fontSize="11.0" vTextAlign="Middle">
+				<expression><![CDATA[$F{durationPerSession}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8f8593aa-77bf-4ae5-8f98-069aab47a22d"/>
+			</element>
+			<element kind="staticText" uuid="6e70f5c6-453d-487e-b100-7ee3be4cf4a4" x="10" y="250" width="116" height="30" fontSize="12.0" vTextAlign="Middle">
+				<text><![CDATA[Instructions            :]]></text>
+			</element>
+			<element kind="textField" uuid="e7994aad-0e1b-4432-bca4-abd04524bdea" x="140" y="250" width="400" height="30" fontSize="11.0" vTextAlign="Middle">
+				<expression><![CDATA[$F{instructions}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c82991ce-25e8-4e76-b394-36244b39b219"/>
+			</element>
+		</band>
+	</detail>
+	<columnFooter height="21" splitType="Stretch"/>
+	<pageFooter height="21" splitType="Stretch"/>
+	<summary height="19" splitType="Stretch"/>
+</jasperReport>

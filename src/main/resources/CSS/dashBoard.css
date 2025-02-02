@@ -1,0 +1,51 @@
+/* Style for the GridPane */
+.grid-pane {
+    -fx-padding: 20;
+    -fx-hgap: 15;
+    -fx-vgap: 15;
+    -fx-background-color: linear-gradient(to bottom, #f0f4f8, #d9e3f0); /* Soft gradient background */
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 2, 2); /* Light shadow around GridPane */
+}
+
+/* Style for each VBox (cards in the grid) */
+.grid-pane .vbox {
+    -fx-background-color: #ffffff; /* Clean white card background */
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-padding: 20;
+    -fx-border-color: rgba(0, 0, 0, 0.05); /* Subtle card border */
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 8, 0, 2, 2); /* Card shadow for depth */
+    -fx-alignment: center;
+}
+
+/* Add hover effect (using pseudo-classes) */
+.grid-pane .vbox:hover {
+    -fx-background-color: linear-gradient(to bottom, #0078d4, #005fa3); /* Blue gradient on hover */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 15, 0, 3, 3); /* Stronger shadow on hover */
+}
+
+/* Title labels (e.g., "Current Members", "Total Sales") */
+.grid-pane .vbox .label:first-child {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #555555; /* Dark gray for a modern look */
+}
+
+/* Numeric or data labels (e.g., "00") */
+.grid-pane .vbox .label:nth-child(2) {
+    -fx-font-size: 36px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0078d4; /* Bright blue for emphasis */
+}
+
+/* Change label text color on hover */
+.grid-pane .vbox:hover .label:first-child {
+    -fx-text-fill: #e0e0e0; /* Light gray for title labels */
+}
+
+.grid-pane .vbox:hover .label:nth-child(2) {
+    -fx-text-fill: #ffffff; /* White for numeric labels */
+}

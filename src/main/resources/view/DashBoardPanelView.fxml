@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="dashBoardPanelAnchor" prefHeight="606.0" prefWidth="673.0" style="-fx-background-color: #34ace0;" stylesheets="@../CSS/Vbox.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.fitlifegym.controller.DashBoardPanelViewController">
+   <children>
+      <ImageView fitHeight="606.0" fitWidth="673.0" layoutX="-7.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/undraw_indoor_bike_pwa4-removebg-preview.png" />
+         </image>
+      </ImageView>
+      <VBox layoutX="39.0" layoutY="116.0" prefHeight="142.0" prefWidth="291.0" styleClass="vbox-container">
+         <children>
+            <Label alignment="CENTER" layoutX="25.0" layoutY="25.0" prefHeight="49.0" prefWidth="261.0" text="Active Sessions" textFill="#b2b2b2">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblActiveSessionsCount" alignment="CENTER" prefHeight="49.0" prefWidth="261.0" textFill="#b2b2b2">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <VBox layoutX="357.0" layoutY="116.0" prefHeight="142.0" prefWidth="291.0" styleClass="vbox-container">
+         <children>
+            <Label alignment="CENTER" layoutX="25.0" layoutY="25.0" prefHeight="49.0" prefWidth="261.0" text="Current Members" textFill="#b2b2b2">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblCurrentMemberCount" alignment="CENTER" prefHeight="49.0" prefWidth="261.0" textFill="#b2b2b2">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <VBox layoutX="39.0" layoutY="318.0" prefHeight="142.0" prefWidth="291.0" styleClass="vbox-container">
+         <children>
+            <Label alignment="CENTER" layoutX="25.0" layoutY="25.0" prefHeight="49.0" prefWidth="261.0" text="Active Booking" textFill="#b2b2b2">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblActiveBooking" alignment="CENTER" prefHeight="49.0" prefWidth="261.0" textFill="#b2b2b2">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <VBox layoutX="357.0" layoutY="318.0" prefHeight="142.0" prefWidth="291.0" styleClass="vbox-container">
+         <children>
+            <Label alignment="CENTER" layoutX="25.0" layoutY="25.0" prefHeight="49.0" prefWidth="261.0" text="Total Sales" textFill="#b2b2b2">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblTotalSalesCount" alignment="CENTER" prefHeight="49.0" prefWidth="261.0" text="0" textFill="#b2b2b2">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <Label fx:id="timeLabel" alignment="CENTER" layoutX="540.0" layoutY="563.0" prefHeight="30.0" prefWidth="116.0" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblDate" alignment="CENTER" layoutX="548.0" layoutY="9.0" prefHeight="30.0" prefWidth="116.0" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
