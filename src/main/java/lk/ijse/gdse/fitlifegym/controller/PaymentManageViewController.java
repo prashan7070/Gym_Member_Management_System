@@ -14,6 +14,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lk.ijse.gdse.fitlifegym.bo.BOFactory;
+import lk.ijse.gdse.fitlifegym.bo.custom.MemberBO;
+import lk.ijse.gdse.fitlifegym.bo.custom.PaymentBO;
+import lk.ijse.gdse.fitlifegym.bo.custom.PaymentPlanBO;
+import lk.ijse.gdse.fitlifegym.dao.custom.PaymentDAO;
 import lk.ijse.gdse.fitlifegym.dto.MemberDTO;
 import lk.ijse.gdse.fitlifegym.dto.PaymentDTO;
 import lk.ijse.gdse.fitlifegym.dto.PaymentPlanDTO;
@@ -31,6 +36,10 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class PaymentManageViewController implements Initializable {
+
+    PaymentBO paymentBO = (PaymentBO) BOFactory.getInstance().getBO(BOFactory.BOType.PAYMENT);
+    PaymentPlanBO paymentPlanBO = (PaymentPlanBO) BOFactory.getInstance().getBO(BOFactory.BOType.PAYMENT_PLAN);
+    MemberBO memberBO = (MemberBO) BOFactory.getInstance().getBO(BOFactory.BOType.MEMBER);
 
     @FXML
     private AnchorPane PaymentManagerAnchor;
@@ -108,9 +117,6 @@ public class PaymentManageViewController implements Initializable {
     @FXML
     private TableView<PaymentTM> tblPayment;
 
-    private MemberDAOImpl memberDAOImpl = new MemberDAOImpl();
-    private PaymentDAOImpl paymentDAOImpl = new PaymentDAOImpl();
-    private PaymentPlanDAOImpl paymentPlanDAOImpl = new PaymentPlanDAOImpl();
 
     @FXML
     void btnAddPaymentPlanOnAction(ActionEvent event) throws IOException {
@@ -142,7 +148,7 @@ public class PaymentManageViewController implements Initializable {
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
         if (optionalButtonType.isPresent() && optionalButtonType.get()==ButtonType.YES){
-            boolean isDelete = paymentDAOImpl.deletePayment(paymentId);
+            boolean isDelete = paymentBO.delete(paymentId);
 
             if (isDelete){
                 new Alert(Alert.AlertType.INFORMATION,"Successful..");
@@ -170,7 +176,7 @@ public class PaymentManageViewController implements Initializable {
         String endDate  = lblEndDate.getText();
         String status   = cmbStatus.getValue();
 
-        boolean isSaved = paymentDAOImpl.savePayment(new PaymentDTO(paymentId,memberId,planId,amount,method,payDate,endDate,status));
+        boolean isSaved = paymentBO.save(new PaymentDTO(paymentId,memberId,planId,amount,method,payDate,endDate,status));
 
         if (isSaved){
             new Alert(Alert.AlertType.INFORMATION,"Successfully saved...");
@@ -195,7 +201,7 @@ public class PaymentManageViewController implements Initializable {
         String endDate  = lblEndDate.getText();
         String status   = cmbStatus.getValue();
 
-        boolean isUpdate = paymentDAOImpl.updatePayment(new PaymentDTO(paymentId,memberId,planId,amount,method,payDate,endDate,status));
+        boolean isUpdate = paymentBO.update(new PaymentDTO(paymentId,memberId,planId,amount,method,payDate,endDate,status));
 
         if (isUpdate){
             new Alert(Alert.AlertType.INFORMATION,"Successfully Updated...");
@@ -211,7 +217,7 @@ public class PaymentManageViewController implements Initializable {
     @FXML
     void cmbMemberIdOnAction(ActionEvent event) throws SQLException {
 
-        MemberDTO memberDTO = memberDAOImpl.getMemberNameById(cmbMemberId.getSelectionModel().getSelectedItem());
+        MemberDTO memberDTO = memberBO.getMemberEntityById(cmbMemberId.getSelectionModel().getSelectedItem());
         if (memberDTO!=null){
             lblMemberName.setText(memberDTO.getName());
         }
@@ -314,7 +320,7 @@ public class PaymentManageViewController implements Initializable {
 
     private void loadPaymentPlanCmbData() throws SQLException {
 
-        ArrayList<PaymentPlanDTO> paymentPlanDTOS = paymentPlanDAOImpl.getAllPaymentPlanDetails();
+        ArrayList<PaymentPlanDTO> paymentPlanDTOS = paymentPlanBO.getAll();
         ObservableList<String> planIds = FXCollections.observableArrayList();
 
         for (PaymentPlanDTO paymentPlanDTO : paymentPlanDTOS){
@@ -340,7 +346,7 @@ public class PaymentManageViewController implements Initializable {
 
     private void loadMemberIdCmbData() throws SQLException {
 
-        ArrayList<MemberDTO> memberDTOS = memberDAOImpl.getAllMembers();
+        ArrayList<MemberDTO> memberDTOS = memberBO.getAll();
         ObservableList<String> memberIds = FXCollections.observableArrayList();
 
         for (MemberDTO memberDTO : memberDTOS){
@@ -359,7 +365,7 @@ public class PaymentManageViewController implements Initializable {
     private void loadPaymentDetailsTable() throws SQLException {
 
 
-        ArrayList<PaymentDTO> paymentDTOS = paymentDAOImpl.getAllPaymentDetails();
+        ArrayList<PaymentDTO> paymentDTOS = paymentBO.getAll();
         ObservableList<PaymentTM> paymentTMS = FXCollections.observableArrayList();
 
         for (PaymentDTO paymentDTO : paymentDTOS){
@@ -389,7 +395,7 @@ public class PaymentManageViewController implements Initializable {
 
     private void getNextPaymentId() throws SQLException {
 
-        String paymentId = paymentDAOImpl.getNextPaymentId();
+        String paymentId = paymentBO.generateId();
         lblPaymentId.setText(paymentId);
 
 
@@ -398,7 +404,7 @@ public class PaymentManageViewController implements Initializable {
     @FXML
     void cmbPaymentIdOnAction(ActionEvent event) throws SQLException {
 
-        PaymentPlanDTO paymentPlanDTO = paymentPlanDAOImpl.getPaymentPlanDTOById(cmbPaymentPlan.getSelectionModel().getSelectedItem());
+        PaymentPlanDTO paymentPlanDTO = paymentPlanBO.getPaymentPlanEntityById(cmbPaymentPlan.getSelectionModel().getSelectedItem());
         LocalDate paymentDate = LocalDate.parse(lblStartDate.getText());
         if (paymentPlanDTO!=null){
 

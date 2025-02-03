@@ -9,6 +9,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse.fitlifegym.bo.BOFactory;
+import lk.ijse.gdse.fitlifegym.bo.custom.EmployeeBO;
 import lk.ijse.gdse.fitlifegym.dto.EmployeeDTO;
 import lk.ijse.gdse.fitlifegym.dto.tm.EmployeeTM;
 import lk.ijse.gdse.fitlifegym.dao.custom.impl.EmployeeDAOImpl;
@@ -22,6 +24,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class EmployeeManageViewController implements Initializable {
+
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getInstance().getBO(BOFactory.BOType.EMPLOYEE);
 
     @FXML
     private DatePicker LblDatePicker;
@@ -80,7 +84,7 @@ public class EmployeeManageViewController implements Initializable {
     @FXML
     private TextField txtRole;
 
-    EmployeeDAOImpl employeeDAOImpl = new EmployeeDAOImpl();
+
 
 
     @FXML
@@ -93,7 +97,7 @@ public class EmployeeManageViewController implements Initializable {
 
         if (optionalButtonType.isPresent() && optionalButtonType.get()==ButtonType.YES){
 
-            boolean isDelete  = employeeDAOImpl.deleteEmployee(employeeId);
+            boolean isDelete  = employeeBO.delete(employeeId);
 
             if (isDelete){
                 new Alert(Alert.AlertType.INFORMATION,"Employee deleted Successfully...").show();
@@ -117,7 +121,7 @@ public class EmployeeManageViewController implements Initializable {
         String role = txtRole.getText();
         String hireDate = LblDatePicker.getValue() != null ? LblDatePicker.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) : "";
 
-        boolean isSaved = employeeDAOImpl.saveEmployee(new EmployeeDTO(employeeId,name,contactInfo,email,role,hireDate));
+        boolean isSaved = employeeBO.save(new EmployeeDTO(employeeId,name,contactInfo,email,role,hireDate));
 
         if (isSaved){
             new Alert(Alert.AlertType.INFORMATION,"Employee saved successfully").show();
@@ -142,7 +146,7 @@ public class EmployeeManageViewController implements Initializable {
 
         EmployeeDTO employeeDTO = new EmployeeDTO(employeeId,name,contactInfo,email,role,hireDate);
 
-        boolean isUpdate = employeeDAOImpl.updateEmployee(employeeDTO);
+        boolean isUpdate = employeeBO.update(employeeDTO);
 
         if (isUpdate){
             new Alert(Alert.AlertType.INFORMATION,"Employee updated successfully...").show();
@@ -209,7 +213,7 @@ public class EmployeeManageViewController implements Initializable {
 
     public void loadNextEmployeeId() throws SQLException {
 
-        String nextEmployeeId = employeeDAOImpl.getNextEmployeeId();
+        String nextEmployeeId = employeeBO.generateId();
         lblEmployeeId.setText(nextEmployeeId);
 
     }
@@ -217,7 +221,7 @@ public class EmployeeManageViewController implements Initializable {
 
     public void loadEmployeeTableDate() throws SQLException {
 
-        ArrayList<EmployeeDTO> employeeDTOS = employeeDAOImpl.getAllEmployees();
+        ArrayList<EmployeeDTO> employeeDTOS = employeeBO.getAll();
 
         ObservableList<EmployeeTM> employeeTMS = FXCollections.observableArrayList();
 

@@ -15,10 +15,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lk.ijse.gdse.fitlifegym.bo.BOFactory;
+import lk.ijse.gdse.fitlifegym.bo.custom.MemberBO;
 import lk.ijse.gdse.fitlifegym.db.DBConnection;
 import lk.ijse.gdse.fitlifegym.dto.MemberDTO;
 import lk.ijse.gdse.fitlifegym.dto.tm.MemberTM;
 import lk.ijse.gdse.fitlifegym.dao.custom.impl.MemberDAOImpl;
+import lk.ijse.gdse.fitlifegym.entity.Member;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;
 
@@ -31,6 +34,8 @@ import java.util.*;
 import java.time.LocalDate;
 
 public class MemberManageViewController implements Initializable {
+
+    MemberBO memberBO = (MemberBO) BOFactory.getInstance().getBO(BOFactory.BOType.MEMBER);
 
     @FXML
     private AnchorPane MemberManagerAnchor;
@@ -104,7 +109,7 @@ public class MemberManageViewController implements Initializable {
 
         if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
 
-            boolean isDeleted = memberDAOImpl.deleteMember(memberId);
+            boolean isDeleted = memberBO.delete(memberId);
             if (isDeleted) {
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Customer deleted...!").show();
@@ -126,7 +131,7 @@ public class MemberManageViewController implements Initializable {
         String email   = txtEmail.getText();
         String contactInfo = txtContactInfo.getText();
 
-        boolean isResult = memberDAOImpl.saveMember(new MemberDTO(memberId, name, age, address, joinDate ,email,contactInfo));
+        boolean isResult = memberBO.save(new MemberDTO(memberId, name, age, address, joinDate ,email,contactInfo));
 
         if (isResult) {
             new Alert(Alert.AlertType.INFORMATION, "Member Save Successful").show();
@@ -168,7 +173,7 @@ public class MemberManageViewController implements Initializable {
                 contactInfo
         );
 
-        boolean isUpdate = memberDAOImpl.updateMember(memberDTO);
+        boolean isUpdate = memberBO.update(memberDTO);
 
         if (isUpdate) {
             refreshPage();
@@ -286,10 +291,10 @@ public class MemberManageViewController implements Initializable {
 
     }
 
-    MemberDAOImpl memberDAOImpl = new MemberDAOImpl();
+
 
     private void loadMemberTableData() throws SQLException {
-        ArrayList<MemberDTO> memberDTOS = memberDAOImpl.getAllMembers();
+        ArrayList<MemberDTO> memberDTOS = memberBO.getAll();
 
         ObservableList<MemberTM> memberTMS = FXCollections.observableArrayList();
 
@@ -312,7 +317,7 @@ public class MemberManageViewController implements Initializable {
 
     public void loadNextMemberId() throws SQLException {
 
-        String nextCustomerId = memberDAOImpl.getNextMemberId();
+        String nextCustomerId = memberBO.generateId();
         lblMemberId.setText(nextCustomerId);
     }
 

@@ -47,4 +47,20 @@ public class SupplierBOImpl implements SupplierBO {
         Supplier supplier = supplierDAO.getSupplierEntityBySupplierId(supplierId);
         return new SupplierDTO(supplier.getSupplierId(),supplier.getName(),supplier.getDescription(),supplier.getContactInfo(),supplier.getAddress());
     }
+
+    @Override
+    public boolean save(SupplierDTO supplierDTO) throws SQLException {
+        return supplierDAO.save(new Supplier(supplierDTO.getSupplierId(),supplierDTO.getSupplierId(),supplierDTO.getDescription(),supplierDTO.getContactInfo(),supplierDTO.getAddress()));
+    }
+
+    @Override
+    public boolean delete(String id) throws SQLException {
+        return supplierDAO.delete(id);
+    }
+
+    @Override
+    public boolean update(SupplierDTO supplierDTO) throws SQLException {
+        return supplierDAO.update(new Supplier(supplierDTO.getSupplierId(),supplierDTO.getSupplierId(),supplierDTO.getDescription(),supplierDTO.getContactInfo(),supplierDTO.getAddress()));
+
+    }
 }

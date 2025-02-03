@@ -11,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.gdse.fitlifegym.bo.BOFactory;
+import lk.ijse.gdse.fitlifegym.bo.custom.LoginBO;
 import lk.ijse.gdse.fitlifegym.dto.AdminDto;
 import lk.ijse.gdse.fitlifegym.dao.custom.impl.AdminDAOImpl;
 
@@ -20,6 +22,9 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class RegisterViewController implements Initializable {
+
+    LoginBO loginBO = (LoginBO) BOFactory.getInstance().getBO(BOFactory.BOType.ADMIN);
+
 
     @FXML
     private Button backBtn;
@@ -51,7 +56,6 @@ public class RegisterViewController implements Initializable {
     @FXML
     private TextField txtUsername;
 
-    private AdminDAOImpl adminDAOImpl = new AdminDAOImpl();
 
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -91,7 +95,7 @@ public class RegisterViewController implements Initializable {
         }
 
         AdminDto adminDto = new AdminDto(id, userName, email, password, role);
-        boolean isSaved = adminDAOImpl.saveUserLogin(adminDto);
+        boolean isSaved = loginBO.save(adminDto);
 
         if (isSaved) {
 
@@ -108,7 +112,7 @@ public class RegisterViewController implements Initializable {
 
 
     public void getNextAdminId() throws SQLException {
-        String id = adminDAOImpl.getNextUserLoginId();
+        String id = loginBO.generateId();
         lblId.setText(id);
     }
 

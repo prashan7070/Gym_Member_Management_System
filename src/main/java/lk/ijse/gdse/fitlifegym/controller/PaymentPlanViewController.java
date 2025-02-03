@@ -10,6 +10,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.gdse.fitlifegym.bo.BOFactory;
+import lk.ijse.gdse.fitlifegym.bo.custom.PaymentPlanBO;
 import lk.ijse.gdse.fitlifegym.dto.PaymentPlanDTO;
 import lk.ijse.gdse.fitlifegym.dto.tm.PaymentPlanTM;
 import lk.ijse.gdse.fitlifegym.dao.custom.impl.PaymentPlanDAOImpl;
@@ -22,6 +24,9 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class PaymentPlanViewController implements Initializable {
+
+    PaymentPlanBO paymentPlanBO = (PaymentPlanBO) BOFactory.getInstance().getBO(BOFactory.BOType.PAYMENT_PLAN);
+
 
     @FXML
     private Button btnAddNewPlan;
@@ -88,7 +93,7 @@ public class PaymentPlanViewController implements Initializable {
             int duration = Integer.parseInt(txtPlanDuration.getText());
             double price = Double.parseDouble(txtPlanPrice.getText());
 
-            boolean isSaved  = paymentPlanDAOImpl.savePlan(new PaymentPlanDTO(id,name,duration,price));
+            boolean isSaved  = paymentPlanBO.save(new PaymentPlanDTO(id,name,duration,price));
 
             if (isSaved){
                 new Alert(Alert.AlertType.INFORMATION,"Successful..").show();
@@ -139,7 +144,7 @@ public class PaymentPlanViewController implements Initializable {
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
         if (optionalButtonType.isPresent() && optionalButtonType.get()==ButtonType.YES){
-                boolean isDelete  = paymentPlanDAOImpl.deletePlan(planId);
+                boolean isDelete  = paymentPlanBO.delete(planId);
 
                 if (isDelete){
                     refreshPayementPlanPage();
@@ -168,7 +173,7 @@ public class PaymentPlanViewController implements Initializable {
         int duration = Integer.parseInt(txtPlanDuration.getText());
         double price = Double.parseDouble(txtPlanPrice.getText());
 
-        boolean isUpdate  = paymentPlanDAOImpl.updatePlan(new PaymentPlanDTO(id,name,duration,price));
+        boolean isUpdate  = paymentPlanBO.update(new PaymentPlanDTO(id,name,duration,price));
 
         if (isUpdate){
             new Alert(Alert.AlertType.INFORMATION,"Successful..").show();
@@ -231,7 +236,7 @@ public class PaymentPlanViewController implements Initializable {
 
     private void loadPaymentPlansTable() throws SQLException {
 
-        ArrayList<PaymentPlanDTO> paymentPlanDTOS = paymentPlanDAOImpl.getAllPaymentPlanDetails();
+        ArrayList<PaymentPlanDTO> paymentPlanDTOS = paymentPlanBO.getAll();
         ObservableList<PaymentPlanTM> paymentPlanTMS = FXCollections.observableArrayList();
 
         for (PaymentPlanDTO paymentPlanDTO : paymentPlanDTOS){
@@ -252,7 +257,7 @@ public class PaymentPlanViewController implements Initializable {
 
     private void loadNextPlanId() throws SQLException {
 
-        String planId =  paymentPlanDAOImpl.getNextPaymentPlanId();
+        String planId =  paymentPlanBO.generateId();
         lblPlanId.setText(planId);
     }
 

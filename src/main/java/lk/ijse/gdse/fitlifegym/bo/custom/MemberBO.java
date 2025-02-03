@@ -2,6 +2,7 @@ package lk.ijse.gdse.fitlifegym.bo.custom;
 
 import lk.ijse.gdse.fitlifegym.bo.SuperBO;
 import lk.ijse.gdse.fitlifegym.dto.MemberDTO;
+import lk.ijse.gdse.fitlifegym.entity.Member;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,6 +18,8 @@ public interface MemberBO extends SuperBO {
     boolean delete(String memberId) throws SQLException;
 
     boolean update(MemberDTO memberDTO) throws SQLException;
+
+    MemberDTO getMemberEntityById(String memberId) throws SQLException;
 
 
 }

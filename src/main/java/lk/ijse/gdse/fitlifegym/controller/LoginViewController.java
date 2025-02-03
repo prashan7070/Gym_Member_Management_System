@@ -12,6 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.gdse.fitlifegym.bo.BOFactory;
+import lk.ijse.gdse.fitlifegym.bo.custom.LoginBO;
 import lk.ijse.gdse.fitlifegym.dto.AdminDto;
 import lk.ijse.gdse.fitlifegym.dao.custom.impl.AdminDAOImpl;
 
@@ -19,6 +21,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class LoginViewController  {
+
+    LoginBO loginBO = (LoginBO) BOFactory.getInstance().getBO(BOFactory.BOType.ADMIN);
 
     @FXML
     private Button btnLogin;
@@ -44,7 +48,6 @@ public class LoginViewController  {
     @FXML
     private TextField txtUsername;
 
-    private final AdminDAOImpl adminDAOImpl = new AdminDAOImpl();
     private AdminDto adminDto;
 
 
@@ -56,7 +59,7 @@ public class LoginViewController  {
 
             try {
 
-                adminDto = adminDAOImpl.checkUserLoginInfo(username);
+                adminDto = loginBO.checkUserLoginInfo(username);
 
                 if (adminDto!=null && adminDto.getPassword().equals(password)){
 
@@ -105,7 +108,7 @@ public class LoginViewController  {
 
         String userName = txtUsername.getText();
         try {
-            AdminDto adminDto = adminDAOImpl.checkUserLoginInfo(userName);
+            AdminDto adminDto = loginBO.checkUserLoginInfo(userName);
             if (adminDto != null) {
                 txtUsername.setStyle(";-fx-border-color: null;");
                 txtPassword.requestFocus();

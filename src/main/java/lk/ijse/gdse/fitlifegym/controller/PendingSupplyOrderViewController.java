@@ -10,6 +10,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.gdse.fitlifegym.bo.BOFactory;
+import lk.ijse.gdse.fitlifegym.bo.custom.*;
 import lk.ijse.gdse.fitlifegym.dto.EquipmentSupplyDTO;
 import lk.ijse.gdse.fitlifegym.dto.SupplierDTO;
 import lk.ijse.gdse.fitlifegym.dto.tm.EquipmentSupplyTM;
@@ -23,6 +25,11 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class PendingSupplyOrderViewController implements Initializable {
+
+    SupplierBO supplierBO = (SupplierBO) BOFactory.getInstance().getBO(BOFactory.BOType.SUPPLIER);
+    EquipmentBO equipmentBO = (EquipmentBO) BOFactory.getInstance().getBO(BOFactory.BOType.EQUIPMENT);
+    EquipmentSupplyBO equipmentSupplyBO = (EquipmentSupplyBO) BOFactory.getInstance().getBO(BOFactory.BOType.EQUIPMENT_SUPPLY);
+
 
     @FXML
     private Button btnCancelOrder;
@@ -108,19 +115,9 @@ public class PendingSupplyOrderViewController implements Initializable {
         this.stage = stage;
     }
 
-    private final EquipmentDAOImpl equipmentDAOImpl = new EquipmentDAOImpl();
-
-    private final SupplierDAOImpl supplierDAOImpl = new SupplierDAOImpl();
-
-    private final EquipmentSupplyDAOImpl equipmentSupplyDAOImpl = new EquipmentSupplyDAOImpl();
 
     @FXML
     void btnCancelOrderOnAction(ActionEvent event) {
-
-
-
-
-
 
 
 
@@ -142,10 +139,10 @@ public class PendingSupplyOrderViewController implements Initializable {
         if (equipmentSupplyTM!=null){
 
             lblItemId.setText(equipmentSupplyTM.getEquipmentId());
-            lblItemName.setText(equipmentDAOImpl.getEquipmentNameAndStatusById(equipmentSupplyTM.getEquipmentId()).getName());
+            lblItemName.setText(equipmentBO.getEquipmentEntityById(equipmentSupplyTM.getEquipmentId()).getName());
             lblOrderId.setText(equipmentSupplyTM.getOrderId());
             lblSupplierId.setText(equipmentSupplyTM.getSupplierId());
-            lblSupplierName.setText(supplierDAOImpl.getNameBySupplierId(equipmentSupplyTM.getSupplierId()).getName());
+            lblSupplierName.setText(supplierBO.getSupplierEntityBySupplierId(equipmentSupplyTM.getSupplierId()).getName());
             lblItemQty.setText(String.valueOf(equipmentSupplyTM.getQuantityOrdered()));
             lblUnitCost.setText(String.valueOf(equipmentSupplyTM.getUnitCost()));
             lblDeliveryCost.setText(String.valueOf(equipmentSupplyTM.getDeliveryCost()));
@@ -214,7 +211,7 @@ public class PendingSupplyOrderViewController implements Initializable {
 
     private void loadpendingOrdersTableData() throws SQLException {
 
-        ArrayList<EquipmentSupplyDTO> equipmentSupplyDTOS = equipmentSupplyDAOImpl.getAllEquimentSupplyData();
+        ArrayList<EquipmentSupplyDTO> equipmentSupplyDTOS = equipmentSupplyBO.getAll();
 
         ObservableList<EquipmentSupplyTM> equipmentSupplyTMS = FXCollections.observableArrayList();
 
@@ -265,7 +262,7 @@ public class PendingSupplyOrderViewController implements Initializable {
 
             EquipmentSupplyDTO equipmentSupplyDTO = new EquipmentSupplyDTO(orderId,equipmentId,supplierId,qtyOrdered,unitCost,deliveryCost,totalCost,date,status);
 
-            boolean isSuccessful = equipmentSupplyDAOImpl.confirmSupplyOrder(equipmentSupplyDTO);
+            boolean isSuccessful = equipmentSupplyBO.confirmSupplyOrder(equipmentSupplyDTO);
 
             if (isSuccessful){
 

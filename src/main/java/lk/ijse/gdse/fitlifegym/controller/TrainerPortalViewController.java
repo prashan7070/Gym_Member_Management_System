@@ -9,6 +9,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse.fitlifegym.bo.BOFactory;
+import lk.ijse.gdse.fitlifegym.bo.custom.*;
 import lk.ijse.gdse.fitlifegym.dao.custom.impl.*;
 import lk.ijse.gdse.fitlifegym.dto.*;
 import lk.ijse.gdse.fitlifegym.dto.tm.DietPlanTM;
@@ -25,6 +27,17 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class TrainerPortalViewController implements Initializable {
+
+    MemberBO memberBO = (MemberBO) BOFactory.getInstance().getBO(BOFactory.BOType.MEMBER);
+    WorkOutPlanBO workOutPlanBO = (WorkOutPlanBO) BOFactory.getInstance().getBO(BOFactory.BOType.WORK_OUT_PLAN);
+    WorkOutEquipBO workOutEquipBO = (WorkOutEquipBO) BOFactory.getInstance().getBO(BOFactory.BOType.WORK_OUT_EQUIP);
+    SessionBO sessionBO = (SessionBO) BOFactory.getInstance().getBO(BOFactory.BOType.SESSION);
+    EquipmentBO equipmentBO = (EquipmentBO) BOFactory.getInstance().getBO(BOFactory.BOType.EQUIPMENT);
+    DietPlanBO dietPlanBO = (DietPlanBO) BOFactory.getInstance().getBO(BOFactory.BOType.DIET_PLAN);
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getInstance().getBO(BOFactory.BOType.EMPLOYEE);
+
+
+
 
     @FXML
     private AnchorPane ClassManagePanelAnchor;
@@ -277,10 +290,9 @@ public class TrainerPortalViewController implements Initializable {
 
     }
 
-    WorkOutPlanDAOImpl workOutPlanDAOImpl = new WorkOutPlanDAOImpl();
 
     private void loadWorkOutPlanTable() throws SQLException {
-        ArrayList<WorkOutPlanDTO> workOutPlanDTOS = workOutPlanDAOImpl.getAllWorkOutPlanDetails();
+        ArrayList<WorkOutPlanDTO> workOutPlanDTOS = workOutPlanBO.getAll();
         ObservableList<WorkOutPlanTM> workOutPlanTMS = FXCollections.observableArrayList();
 
         for (WorkOutPlanDTO workOutPlanDTO : workOutPlanDTOS){
@@ -303,7 +315,7 @@ public class TrainerPortalViewController implements Initializable {
 
 
     public void getNextWorkOutPlanId() throws SQLException {
-        String workOutPlanId = workOutPlanDAOImpl.getNextWorkOutPlanId();
+        String workOutPlanId = workOutPlanBO.generateId();
         lblWorkOutPlanId.setText(workOutPlanId);
 
     }
@@ -321,7 +333,7 @@ public class TrainerPortalViewController implements Initializable {
 
         if (optionalButtonType.isPresent() && optionalButtonType.get()==ButtonType.YES){
 
-            boolean isDelete = workOutPlanDAOImpl.deleteWorkoutPlan(workPlanId);
+            boolean isDelete = workOutPlanBO.delete(workPlanId);
 
                 if (isDelete){
                     refreshWorkOutPlanPage();
@@ -352,7 +364,7 @@ public class TrainerPortalViewController implements Initializable {
         String endDate       = endDatePickerOfWorkOutPllan.getValue() != null   ? endDatePickerOfWorkOutPllan.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) : "";
         String description   = lblDescOfWorkOutPlan.getText();
 
-        boolean isUpdate = workOutPlanDAOImpl.updateWorkOutPlan(new WorkOutPlanDTO(workOutPlanId,memberId,startDate,endDate,description));
+        boolean isUpdate = workOutPlanBO.update(new WorkOutPlanDTO(workOutPlanId,memberId,startDate,endDate,description));
 
         if (isUpdate) {
             new Alert(Alert.AlertType.INFORMATION,"Successfully updated...").show();
@@ -372,7 +384,7 @@ public class TrainerPortalViewController implements Initializable {
         String endDate       = endDatePickerOfWorkOutPllan.getValue() != null   ? endDatePickerOfWorkOutPllan.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) : "";
         String description   = lblDescOfWorkOutPlan.getText();
 
-        boolean isSaved = workOutPlanDAOImpl.saveWorkOutPlan(new WorkOutPlanDTO(workOutPlanId,memberId,startDate,endDate,description));
+        boolean isSaved = workOutPlanBO.save(new WorkOutPlanDTO(workOutPlanId,memberId,startDate,endDate,description));
 
         if (isSaved) {
             new Alert(Alert.AlertType.INFORMATION,"Successfully saved...").show();
@@ -401,12 +413,11 @@ public class TrainerPortalViewController implements Initializable {
 
     }
 
-    MemberDAOImpl memberDAOImpl = new MemberDAOImpl();
 
     @FXML
     void cmbMemberIdOfWorkOutPlanOnAction(ActionEvent event) throws SQLException {
 
-        MemberDTO memberDTO = memberDAOImpl.getMemberNameById(cmbMemberIdOfWorkOutPlan.getSelectionModel().getSelectedItem());
+        MemberDTO memberDTO = memberBO.getMemberEntityById(cmbMemberIdOfWorkOutPlan.getSelectionModel().getSelectedItem());
         if (memberDTO!=null){
             lblMemberIdOfWorkOutPlan.setText(memberDTO.getName());
         }
@@ -416,7 +427,7 @@ public class TrainerPortalViewController implements Initializable {
 
     private void getAllMemberIdsOfWOP() throws SQLException {
 
-        ArrayList<MemberDTO> memberDTOS = memberDAOImpl.getAllMembers();
+        ArrayList<MemberDTO> memberDTOS = memberBO.getAll();
         ObservableList<String> memberIds = FXCollections.observableArrayList();
 
         for (MemberDTO memberDTO : memberDTOS){
@@ -466,10 +477,9 @@ public class TrainerPortalViewController implements Initializable {
 
     }
 
-    WorkOutEquipDAOImpl workOutEquipDAOImpl = new WorkOutEquipDAOImpl();
 
     private void loadWorkOutEquipmentTable() throws SQLException {
-        ArrayList<WorkOutEquipDTO> workOutEquipDTOS = workOutEquipDAOImpl.getAllWorkOutEquipDetails();
+        ArrayList<WorkOutEquipDTO> workOutEquipDTOS = workOutEquipBO.getAll();
 
         ObservableList<WorkOutEquipTM> workOutEquipTMS = FXCollections.observableArrayList();
 
@@ -490,12 +500,11 @@ public class TrainerPortalViewController implements Initializable {
 
     }
 
-    EquipmentDAOImpl equipmentDAOImpl = new EquipmentDAOImpl();
 
 
     private void loadEquipmentIdsOfWOE() throws SQLException {
 
-        ArrayList<EquipmentDTO> equipmentDTOS = equipmentDAOImpl.getAllEquipmentDetails();
+        ArrayList<EquipmentDTO> equipmentDTOS = equipmentBO.getAllEquipments();
 
         ObservableList<String> equipmentIds = FXCollections.observableArrayList();
 
@@ -544,7 +553,7 @@ public class TrainerPortalViewController implements Initializable {
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
         if (optionalButtonType.isPresent() && optionalButtonType.get()==ButtonType.YES){
-                boolean isDelete = workOutEquipDAOImpl.deleteWorkOutEquipDetails(equipmentId,workOutPlanId);
+                boolean isDelete = workOutEquipBO.delete(equipmentId,workOutPlanId);
                     if (isDelete){
                         new Alert(Alert.AlertType.INFORMATION,"Successfully deleted...").show();
                         refreshWorkOutEquipmentPage();
@@ -573,7 +582,7 @@ public class TrainerPortalViewController implements Initializable {
         String instruction=txtInstruction.getText();
 
 
-        boolean isUpdate = workOutEquipDAOImpl.updateWorkOutEquipDetails(new WorkOutEquipDTO(equipId,workOutPlanId,usageFreq,durationPerSession,instruction));
+        boolean isUpdate = workOutEquipBO.update(new WorkOutEquipDTO(equipId,workOutPlanId,usageFreq,durationPerSession,instruction));
 
         if (isUpdate){
             new Alert(Alert.AlertType.INFORMATION,"Successfully updated...");
@@ -596,7 +605,7 @@ public class TrainerPortalViewController implements Initializable {
         String instruction=txtInstruction.getText();
 
 
-            boolean isSaved = workOutEquipDAOImpl.saveWorkOutEquipDetails(new WorkOutEquipDTO(equipId, workOutPlanId, usageFreq, durationPerSession, instruction));
+            boolean isSaved = workOutEquipBO.save(new WorkOutEquipDTO(equipId, workOutPlanId, usageFreq, durationPerSession, instruction));
 
             if (isSaved) {
                 new Alert(Alert.AlertType.INFORMATION, "Successfully Saved...").show();
@@ -610,7 +619,7 @@ public class TrainerPortalViewController implements Initializable {
     @FXML
     void cmbEquipmentIdOnAction(ActionEvent event) throws SQLException {
 
-        EquipmentDTO equipmentDTO= equipmentDAOImpl.getEquipmentNameAndStatusById(cmbEquipmentId.getSelectionModel().getSelectedItem());
+        EquipmentDTO equipmentDTO= equipmentBO.getEquipmentEntityById(cmbEquipmentId.getSelectionModel().getSelectedItem());
 
         if (equipmentDTO !=null){
             lblEquipmentName.setText(equipmentDTO.getName());
@@ -629,7 +638,7 @@ public class TrainerPortalViewController implements Initializable {
     @FXML
     void cmbWorkoutPlanIdOfWOEOnAction(ActionEvent event) throws SQLException {
 
-        String memberName = workOutPlanDAOImpl.getMemberNameByWorkOutPlanId(cmbWorkoutPlanIdOfWOE.getSelectionModel().getSelectedItem());
+        String memberName = workOutPlanBO.getMemberNameByWorkOutPlanId(cmbWorkoutPlanIdOfWOE.getSelectionModel().getSelectedItem());
         if (memberName!=null){
             lblMemberNameOfWOE.setText(memberName);
         }
@@ -660,7 +669,7 @@ public class TrainerPortalViewController implements Initializable {
 
 
     private void loadWorkOutPlanIdsOfWOE() throws SQLException {
-        ArrayList<WorkOutPlanDTO> workOutPlanDTOS = workOutPlanDAOImpl.getAllWorkOutPlanDetails();
+        ArrayList<WorkOutPlanDTO> workOutPlanDTOS = workOutPlanBO.getAll();
 
         ObservableList<String> workOutPlanIds = FXCollections.observableArrayList();
 
@@ -713,20 +722,20 @@ public class TrainerPortalViewController implements Initializable {
 
     private void getNextDietPlanId() throws SQLException {
 
-        String dietPlanId = dietPlanDAOImpl.getNextDietPlanId();
+        String dietPlanId = dietPlanBO.generateId();
         lblDietPlanId.setText(dietPlanId);
 
 
     }
 
 
-    DietPlanDAOImpl dietPlanDAOImpl = new DietPlanDAOImpl();
+
 
 
 
     private void loadDietPlanTable() throws SQLException {
 
-        ArrayList<DietPlanDTO> dietPlanDTOS = dietPlanDAOImpl.getAllDietPlanDetails();
+        ArrayList<DietPlanDTO> dietPlanDTOS = dietPlanBO.getAll();
 
         ObservableList<DietPlanTM> dietPlanTMS = FXCollections.observableArrayList();
 
@@ -758,7 +767,7 @@ public class TrainerPortalViewController implements Initializable {
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
         if (optionalButtonType.isPresent() && optionalButtonType.get()==ButtonType.YES){
-            boolean isDelete = dietPlanDAOImpl.deleteDietPlan(dietPlanId);
+            boolean isDelete = dietPlanBO.delete(dietPlanId);
                 if (isDelete){
                     refreshDietPlanPage();
                     new Alert(Alert.AlertType.INFORMATION,"Successfully delete...");
@@ -792,7 +801,7 @@ public class TrainerPortalViewController implements Initializable {
         String endDate    = endDatePickerOfDietPlan.getValue()!=null ? endDatePickerOfDietPlan.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) : "";
         String description= txtDescriptionOfDietPlan.getText();
 
-        boolean isSaved = dietPlanDAOImpl.saveDietPlanDetails(new DietPlanDTO(dietPlanId,memberId,startDate,endDate,description));
+        boolean isSaved = dietPlanBO.save(new DietPlanDTO(dietPlanId,memberId,startDate,endDate,description));
 
         if (isSaved){
             new Alert(Alert.AlertType.INFORMATION,"Successfully deleted...");
@@ -816,7 +825,7 @@ public class TrainerPortalViewController implements Initializable {
         String endDate    = endDatePickerOfDietPlan.getValue()!=null ? endDatePickerOfDietPlan.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) : "";
         String description= txtDescriptionOfDietPlan.getText();
 
-        boolean isUpdate = dietPlanDAOImpl.updateDietPlanDetails(new DietPlanDTO(dietPlanId,memberId,startDate,endDate,description));
+        boolean isUpdate = dietPlanBO.update(new DietPlanDTO(dietPlanId,memberId,startDate,endDate,description));
 
         if (isUpdate){
             new Alert(Alert.AlertType.INFORMATION,"Successfully updated...");
@@ -828,7 +837,7 @@ public class TrainerPortalViewController implements Initializable {
     }
 
     public void loadMemberIdsOfDietPlan() throws SQLException {
-        ArrayList<MemberDTO> memberDTOS = memberDAOImpl.getAllMembers();
+        ArrayList<MemberDTO> memberDTOS = memberBO.getAll();
         ObservableList<String> memberIds = FXCollections.observableArrayList();
 
         for (MemberDTO memberDTO : memberDTOS){
@@ -846,7 +855,7 @@ public class TrainerPortalViewController implements Initializable {
     @FXML
     void cmbMemberIdOfDietPlanOnAction(ActionEvent event) throws SQLException {
 
-            MemberDTO memberDTO = memberDAOImpl.getMemberNameById(cmbMemberIdOfDietPlan.getSelectionModel().getSelectedItem());
+            MemberDTO memberDTO = memberBO.getMemberEntityById(cmbMemberIdOfDietPlan.getSelectionModel().getSelectedItem());
             if (memberDTO!=null){
                 lblMemberIdOfDietPlan.setText(memberDTO.getName());
             }
@@ -893,7 +902,6 @@ public class TrainerPortalViewController implements Initializable {
 
     }
 
-    SessionDAOImpl sessionDAOImpl = new SessionDAOImpl();
 
     private void refreshSessionPage() throws SQLException {
         loadNextSessionId();
@@ -910,17 +918,17 @@ public class TrainerPortalViewController implements Initializable {
     }
 
     private void loadNextSessionId() throws SQLException {
-        String sessionId = sessionDAOImpl.getNextSessionId();
+        String sessionId = sessionBO.generateId();
         lblSessionId.setText(sessionId);
 
     }
 
 
-    EmployeeDAOImpl employeeDAOImpl = new EmployeeDAOImpl();
+
 
     private void loadEmployeeIdsOfSession() throws SQLException {
 
-        ArrayList<EmployeeDTO> employeeDTOS = employeeDAOImpl.getAllEmployees();
+        ArrayList<EmployeeDTO> employeeDTOS = employeeBO.getAll();
         ObservableList<String> employeeIds = FXCollections.observableArrayList();
 
         for (EmployeeDTO employeeDTO : employeeDTOS){
@@ -934,7 +942,7 @@ public class TrainerPortalViewController implements Initializable {
 
     private void loadSessionTable() throws SQLException {
 
-        ArrayList<SessionDTO> sessionDTOS = sessionDAOImpl.getAllSessionDetails();
+        ArrayList<SessionDTO> sessionDTOS = sessionBO.getAll();
         ObservableList<SessionTM> sessionTMS = FXCollections.observableArrayList();
 
         for (SessionDTO sessionDTO : sessionDTOS){
@@ -966,7 +974,7 @@ public class TrainerPortalViewController implements Initializable {
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
         if (optionalButtonType.isPresent() && optionalButtonType.get()==ButtonType.YES){
-            boolean isCanceled = sessionDAOImpl.deleteSession(sessionId);
+            boolean isCanceled = sessionBO.delete(sessionId);
                 if (isCanceled){
                     new Alert(Alert.AlertType.INFORMATION,"Session Canceled...");
                     refreshSessionPage();
@@ -989,7 +997,7 @@ public class TrainerPortalViewController implements Initializable {
         String time = lblTimeOfSession.getText();
         String desc = txtDescriptionOfSession.getText();
 
-        boolean isSaved = sessionDAOImpl.saveSessions(new SessionDTO(sessionId,employeeId,date,time,desc));
+        boolean isSaved = sessionBO.save(new SessionDTO(sessionId,employeeId,date,time,desc));
 
         if (isSaved){
             new Alert(Alert.AlertType.INFORMATION,"Successful...").show();
@@ -1032,7 +1040,7 @@ public class TrainerPortalViewController implements Initializable {
         String time = lblTimeOfSession.getText();
         String desc = txtDescriptionOfSession.getText();
 
-        boolean isUpdate = sessionDAOImpl.updateSession(new SessionDTO(sessionId,employeeId,date,time,desc));
+        boolean isUpdate = sessionBO.update(new SessionDTO(sessionId,employeeId,date,time,desc));
 
         if (isUpdate){
             new Alert(Alert.AlertType.INFORMATION,"Successful...").show();
@@ -1049,7 +1057,7 @@ public class TrainerPortalViewController implements Initializable {
     @FXML
     void cmbEmployeeIdOnAction(ActionEvent event) throws SQLException {
 
-            EmployeeDTO employeeDTO = employeeDAOImpl.getEmployeeNameById(cmbEmployeeId.getSelectionModel().getSelectedItem());
+            EmployeeDTO employeeDTO = employeeBO.getEmployeeEntityById(cmbEmployeeId.getSelectionModel().getSelectedItem());
 
             if (employeeDTO!=null){
                 lblEmployeeName.setText(employeeDTO.getName());

@@ -15,4 +15,10 @@ public interface SupplierBO extends SuperBO {
 
     SupplierDTO getSupplierEntityBySupplierId(String supplierId) throws SQLException;
 
+    boolean save(SupplierDTO supplierDTO) throws SQLException;
+
+    boolean delete(String id) throws SQLException;
+
+    boolean update(SupplierDTO supplierDTO) throws SQLException;
+
 }

@@ -32,9 +32,10 @@ public class WorkOutEquipBOImpl implements WorkOutEquipBO {
     }
 
     @Override
-    public boolean delete(String workOutEquipId) throws SQLException {
-        return workOutEquipDAO.delete(workOutEquipId);
+    public boolean delete(String equipmentId, String workOutPlanId) throws SQLException {
+        return workOutEquipDAO.delete(equipmentId,workOutPlanId);
     }
+
 
     @Override
     public boolean update(WorkOutEquipDTO workOutEquipDTO) throws SQLException {

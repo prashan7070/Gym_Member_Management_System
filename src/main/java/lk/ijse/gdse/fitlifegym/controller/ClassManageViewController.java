@@ -298,8 +298,6 @@ public class ClassManageViewController implements Initializable {
 
 
 
-    EmployeeDAOImpl employeeDAOImpl = new EmployeeDAOImpl();
-
     private void loadClassTable() throws SQLException {
 
         ArrayList<ClassDTO> classDTOS = classBO.getAllClasses();
@@ -395,7 +393,7 @@ public class ClassManageViewController implements Initializable {
         String className = txtClassName.getText();
         String classType = txtClassType.getText();
 
-        boolean isUpdate = classDAOImpl.updateClass(new ClassDTO(classId,employeeId,className,classType));
+        boolean isUpdate = classBO.updateClasses(new ClassDTO(classId,employeeId,className,classType));
 
         if (isUpdate){
             refreshClassPage();
@@ -452,12 +450,11 @@ public class ClassManageViewController implements Initializable {
 
     }
 
-    AttendanceDAOImpl attendanceDAOImpl = new AttendanceDAOImpl();
 
 
     public void loadAttendanceDetailsTable() throws SQLException {
 
-        ArrayList<AttendanceDTO> attendanceDTOS = attendanceDAOImpl.getAllAttendaceDetails();
+        ArrayList<AttendanceDTO> attendanceDTOS = attendanceBO.getAllAttendance();
 
         ObservableList<AttendanceTM> attendanceTMS = FXCollections.observableArrayList();
 
@@ -481,17 +478,17 @@ public class ClassManageViewController implements Initializable {
 
     public void getNextAttendanceId() throws SQLException {
 
-        String attendanceId = attendanceDAOImpl.getNextAttendanceId();
+        String attendanceId = attendanceBO.generateNewAttendanceId();
         lblAttendanceId.setText(attendanceId);
 
     }
 
-    MemberDAOImpl memberDAOImpl = new MemberDAOImpl();
+
 
 
     public void loadMemberIdCmb() throws SQLException {
 
-        ArrayList<MemberDTO> memberDTOS = memberDAOImpl.getAllMembers();
+        ArrayList<MemberDTO> memberDTOS = memberBO.getAll();
         ObservableList<String> memberIds = FXCollections.observableArrayList();
 
         for (MemberDTO memberDTO : memberDTOS){
@@ -502,7 +499,7 @@ public class ClassManageViewController implements Initializable {
     }
 
     public void loadClassIdCmb() throws SQLException {
-        ArrayList<ClassDTO> classDTOS = classDAOImpl.getAllClassDetails();
+        ArrayList<ClassDTO> classDTOS = classBO.getAllClasses();
         ObservableList<String> classIds = FXCollections.observableArrayList();
 
         for (ClassDTO classDTO : classDTOS){
@@ -549,7 +546,7 @@ public class ClassManageViewController implements Initializable {
 
         if(optionalButtonType.isPresent() && optionalButtonType.get()==ButtonType.YES) {
 
-            boolean isDelete = attendanceDAOImpl.deleteAttendaceData(attendanceId);
+            boolean isDelete = attendanceBO.deleteAttendance(attendanceId);
 
             if (isDelete) {
                 new Alert(Alert.AlertType.INFORMATION, "Successfully deleted...").show();
@@ -571,7 +568,7 @@ public class ClassManageViewController implements Initializable {
         String date = lblAttendDateOfAttedDetails.getValue()!=null ? lblAttendDateOfAttedDetails.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) : "";
         String status = cmbStatus.getValue();
 
-        boolean isSaved = attendanceDAOImpl.SaveAttendaceData(new AttendanceDTO(attendanceId,classId,memberId,date,status));
+        boolean isSaved = attendanceBO.saveAttendance(new AttendanceDTO(attendanceId,classId,memberId,date,status));
 
         if (isSaved){
             new Alert(Alert.AlertType.INFORMATION,"Attendance marked successfull..").show();
@@ -592,7 +589,7 @@ public class ClassManageViewController implements Initializable {
         String date = lblAttendDateOfAttedDetails.getValue()!=null ? lblAttendDateOfAttedDetails.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) : "";
         String status = cmbStatus.getValue();
 
-        boolean isUpdate = attendanceDAOImpl.updateAttendaceData(new AttendanceDTO(attendanceId,classId,memberId,date,status));
+        boolean isUpdate = attendanceBO.updateAttendance(new AttendanceDTO(attendanceId,classId,memberId,date,status));
 
         if (isUpdate){
             new Alert(Alert.AlertType.INFORMATION,"Successfully updated...").show();
@@ -607,7 +604,7 @@ public class ClassManageViewController implements Initializable {
     @FXML
     void cmbClassIdOfAtteDetailsOnAction(ActionEvent event) throws SQLException {
 
-        ClassDTO classDTO = classDAOImpl.getClassNamebyId(cmbClassIdOfAtteDetails.getSelectionModel().getSelectedItem());
+        ClassDTO classDTO = classBO.getClassEntityById(cmbClassIdOfAtteDetails.getSelectionModel().getSelectedItem());
 
         if (classDTO!=null){
             lblClassNameOfAttedDetails.setText(classDTO.getClassName());
@@ -620,7 +617,7 @@ public class ClassManageViewController implements Initializable {
     @FXML
     void cmbMemberIdOnAction(ActionEvent event) throws SQLException {
 
-        MemberDTO memberDTO = memberDAOImpl.getMemberNameById(cmbMemberId.getSelectionModel().getSelectedItem());
+        MemberDTO memberDTO = memberBO.getMemberEntityById(cmbMemberId.getSelectionModel().getSelectedItem());
         if (memberDTO!=null){
             lblMemberName.setText(memberDTO.getName());
         }
@@ -682,11 +679,10 @@ public class ClassManageViewController implements Initializable {
 
     }
 
-    BookingDAOImpl bookingDAOImpl = new BookingDAOImpl();
 
 
     public void loadBookingDetailsTable() throws SQLException {
-        ArrayList<BookingDTO> bookingDTOS  = bookingDAOImpl.getAllBookingDetails();
+        ArrayList<BookingDTO> bookingDTOS  = bookingBO.getAllBookings();
         ObservableList<BookingTM> bookingTMS = FXCollections.observableArrayList();
 
         for (BookingDTO bookingDTO : bookingDTOS){
@@ -707,7 +703,7 @@ public class ClassManageViewController implements Initializable {
     }
 
     public void loadNextBookingId() throws SQLException {
-        String bookingId = bookingDAOImpl.getNextBookingId();
+        String bookingId = bookingBO.generateBookingId();
         lblBookingId.setText(bookingId);
     }
 
@@ -727,7 +723,7 @@ public class ClassManageViewController implements Initializable {
         String date      = lblBookingDateOfBookingDetails.getValue()!=null ? lblBookingDateOfBookingDetails.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) : "";
         String time      = lblTime.getText();
 
-        boolean isBooked = bookingDAOImpl.saveBookingDetails(new BookingDTO(bookingId,classId,date,time));
+        boolean isBooked = bookingBO.saveBooking(new BookingDTO(bookingId,classId,date,time));
 
         if (isBooked){
             refreshBookingDetailsPage();
@@ -751,7 +747,7 @@ public class ClassManageViewController implements Initializable {
         String date      = lblBookingDateOfBookingDetails.getValue()!=null ? lblBookingDateOfBookingDetails.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) : "";
         String time      = lblTime.getText();
 
-        boolean isUpdate = bookingDAOImpl.updateBookingDetails(new BookingDTO(bookingId,classId,date,time));
+        boolean isUpdate = bookingBO.updateBooking(new BookingDTO(bookingId,classId,date,time));
 
         if (isUpdate){
             refreshBookingDetailsPage();
@@ -767,7 +763,7 @@ public class ClassManageViewController implements Initializable {
     @FXML
     void cmbClassIdOnAction(ActionEvent event) throws SQLException {
 
-        ClassDTO classDTO = classDAOImpl.getClassNamebyId(cmbClassIdOfBookingDetails.getSelectionModel().getSelectedItem());
+        ClassDTO classDTO = classBO.getClassEntityById(cmbClassIdOfBookingDetails.getSelectionModel().getSelectedItem());
         if (classDTO!= null){
             lblClassNameOfBookingDetails.setText(classDTO.getClassName());
         }
@@ -793,7 +789,7 @@ public class ClassManageViewController implements Initializable {
 
     public void loadClassIdCmbOfAttendance() throws SQLException {
 
-        ArrayList<ClassDTO> classDTOS = classDAOImpl.getAllClassDetails();
+        ArrayList<ClassDTO> classDTOS = classBO.getAllClasses();
         ObservableList<String> classIds = FXCollections.observableArrayList();
 
         for (ClassDTO classDTO : classDTOS){
@@ -816,7 +812,7 @@ public class ClassManageViewController implements Initializable {
         Optional<ButtonType>  optionalButtonType = alert.showAndWait();
 
         if (optionalButtonType.isPresent() && optionalButtonType.get()==ButtonType.YES){
-            boolean isCanceled = bookingDAOImpl.deleteBookingDetails(bookingId);
+            boolean isCanceled = bookingBO.deleteBooking(bookingId);
                 if (isCanceled){
                     refreshBookingDetailsPage();
                     new Alert(Alert.AlertType.INFORMATION,"Successfully canceled...");

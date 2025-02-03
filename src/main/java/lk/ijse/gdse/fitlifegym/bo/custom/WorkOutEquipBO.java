@@ -12,8 +12,10 @@ public interface WorkOutEquipBO extends SuperBO {
 
     boolean save(WorkOutEquipDTO workOutEquipDTO) throws SQLException;
 
-    boolean delete(String workOutEquipId) throws SQLException;
+    boolean delete(String equipmentId,String workOutPlanId) throws SQLException;
 
     boolean update(WorkOutEquipDTO workOutEquipDTO) throws SQLException;
+
+
 
 }

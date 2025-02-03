@@ -10,6 +10,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.gdse.fitlifegym.bo.BOFactory;
+import lk.ijse.gdse.fitlifegym.bo.custom.SupplierBO;
+import lk.ijse.gdse.fitlifegym.bo.custom.SupplimentSupplyBO;
 import lk.ijse.gdse.fitlifegym.dto.SupplementSupplyDTO;
 import lk.ijse.gdse.fitlifegym.dto.SupplierDTO;
 import lk.ijse.gdse.fitlifegym.dto.tm.SupplementSupplyTM;
@@ -23,6 +26,9 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class PendingSupplimentSupplyViewPanelController implements Initializable {
+
+    SupplimentSupplyBO supplimentSupplyBO = (SupplimentSupplyBO) BOFactory.getInstance().getBO(BOFactory.BOType.SUPPLEMENT_SUPPLY);
+    SupplierBO supplierBO = (SupplierBO) BOFactory.getInstance().getBO(BOFactory.BOType.SUPPLIER);
 
     @FXML
     private Button btnCancelOrder;
@@ -143,7 +149,7 @@ public class PendingSupplimentSupplyViewPanelController implements Initializable
 
         SupplementSupplyDTO supplementSupplyDTO = new SupplementSupplyDTO(orderId,supplementId,supplierId,qtyOrdered,unitCost,deliveryCost,totalCost,date,status);
 
-        boolean isSuccessful = supplementSupplyDAOImpl.confirmSupplyOrder(supplementSupplyDTO);
+        boolean isSuccessful = supplimentSupplyBO.confirmSupplyOrder(supplementSupplyDTO);
 
         if (isSuccessful){
 
@@ -156,15 +162,6 @@ public class PendingSupplimentSupplyViewPanelController implements Initializable
         } else {
             new Alert(Alert.AlertType.ERROR,"Something went wrong!").show();
         }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -187,7 +184,7 @@ public class PendingSupplimentSupplyViewPanelController implements Initializable
             lblItemName.setText(supplementDAOImpl.getSupplementDtoById(supplementSupplyTM.getSupplementId()).getName());
             lblOrderId.setText(supplementSupplyTM.getOrderId());
             lblSupplierId.setText(supplementSupplyTM.getSupplierId());
-            lblSupplierName.setText(supplierDAOImpl.getNameBySupplierId(supplementSupplyTM.getSupplierId()).getName());
+            lblSupplierName.setText(supplierBO.getSupplierEntityBySupplierId(supplementSupplyTM.getSupplierId()).getName());
             lblItemQty.setText(String.valueOf(supplementSupplyTM.getQtyOrdered()));
             lblUnitCost.setText(String.valueOf(supplementSupplyTM.getUnitCost()));
             lblDeliveryCost.setText(String.valueOf(supplementSupplyTM.getDeliveryCost()));
@@ -259,7 +256,7 @@ public class PendingSupplimentSupplyViewPanelController implements Initializable
 
     private void loadpendingOrdersTableData() throws SQLException {
 
-        ArrayList<SupplementSupplyDTO> supplementSupplyDTOS = supplementSupplyDAOImpl.getAllSupplementSupplyData();
+        ArrayList<SupplementSupplyDTO> supplementSupplyDTOS = supplimentSupplyBO.getAll();
 
         ObservableList<SupplementSupplyTM> supplementSupplyTMS = FXCollections.observableArrayList();
 

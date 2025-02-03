@@ -46,4 +46,10 @@ public class PaymentPlanBOImpl implements PaymentPlanBO {
         return paymentPlanDAO.update(new PaymentPlan(paymentPlanDTO.getPlanId(),paymentPlanDTO.getPlanName(),paymentPlanDTO.getDuration(),paymentPlanDTO.getPrice()));
 
     }
+
+    @Override
+    public PaymentPlanDTO getPaymentPlanEntityById(String planId) throws SQLException {
+        PaymentPlan paymentPlan = paymentPlanDAO.getPaymentPlanEntityById(planId);
+        return new PaymentPlanDTO(paymentPlan.getPlanId(),paymentPlan.getPlanName(),paymentPlan.getDuration(),paymentPlan.getPrice());
+    }
 }

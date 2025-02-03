@@ -10,6 +10,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.gdse.fitlifegym.bo.BOFactory;
+import lk.ijse.gdse.fitlifegym.bo.custom.SupplierBO;
+import lk.ijse.gdse.fitlifegym.bo.custom.SupplimentSupplyBO;
 import lk.ijse.gdse.fitlifegym.dto.SupplementDTO;
 import lk.ijse.gdse.fitlifegym.dto.SupplementSupplyDTO;
 import lk.ijse.gdse.fitlifegym.dto.SupplierDTO;
@@ -26,6 +29,10 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class SupplementSupplyViewPanelController implements Initializable {
+
+    SupplimentSupplyBO supplimentSupplyBO = (SupplimentSupplyBO) BOFactory.getInstance().getBO(BOFactory.BOType.SUPPLEMENT_SUPPLY);
+    SupplierBO supplierBO = (SupplierBO) BOFactory.getInstance().getBO(BOFactory.BOType.SUPPLIER);
+
 
     @FXML
     private Button btnAddSupplier;
@@ -102,9 +109,6 @@ public class SupplementSupplyViewPanelController implements Initializable {
         this.currentSupplementDTO = currentSupplementDTO;
     }
 
-    private final SupplierDAOImpl supplierDAOImpl = new SupplierDAOImpl();
-
-    private final SupplementSupplyDAOImpl supplementSupplyDAOImpl = new SupplementSupplyDAOImpl();
 
     @FXML
     void btnAddSupplierOnAction(ActionEvent event) {
@@ -141,7 +145,7 @@ public class SupplementSupplyViewPanelController implements Initializable {
 
         if (optionalButtonType.isPresent() && optionalButtonType.get()==ButtonType.YES){
 
-            boolean isSuccessful = supplementSupplyDAOImpl.savePendingSupplyOrder(currentSupplementDTO,new SupplementSupplyDTO(
+            boolean isSuccessful = supplimentSupplyBO.savePendingSupplyOrder(currentSupplementDTO,new SupplementSupplyDTO(
 
                     orderId,
                     supplementId,
@@ -234,7 +238,7 @@ public class SupplementSupplyViewPanelController implements Initializable {
 
     private void loadSupplierTable() throws SQLException {
 
-        ArrayList<SupplierDTO> supplierDTOS = supplierDAOImpl.getAllSupplierData();
+        ArrayList<SupplierDTO> supplierDTOS = supplierBO.getAll();
 
         ObservableList<SupplierTM> supplierTMS = FXCollections.observableArrayList();
 
@@ -262,7 +266,7 @@ public class SupplementSupplyViewPanelController implements Initializable {
 
     private void loadNextOrderId() throws SQLException {
 
-        lblOrderId.setText(supplementSupplyDAOImpl.getNextOrderId());
+        lblOrderId.setText(supplimentSupplyBO.generateId());
 
     }
 

@@ -15,6 +15,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lk.ijse.gdse.fitlifegym.bo.BOFactory;
+import lk.ijse.gdse.fitlifegym.bo.custom.EquipmentBO;
+import lk.ijse.gdse.fitlifegym.bo.custom.SupplementBO;
+import lk.ijse.gdse.fitlifegym.bo.custom.SupplierBO;
 import lk.ijse.gdse.fitlifegym.dto.EquipmentDTO;
 import lk.ijse.gdse.fitlifegym.dto.SupplementDTO;
 import lk.ijse.gdse.fitlifegym.dto.SupplierDTO;
@@ -33,6 +37,11 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class StockManageViewController implements Initializable {
+
+    SupplierBO supplierBO = (SupplierBO) BOFactory.getInstance().getBO(BOFactory.BOType.SUPPLIER);
+    EquipmentBO equipmentBO = (EquipmentBO) BOFactory.getInstance().getBO(BOFactory.BOType.EQUIPMENT);
+    SupplementBO supplementBO = (SupplementBO) BOFactory.getInstance().getBO(BOFactory.BOType.SUPPLEMENT);
+
 
     @FXML
     private AnchorPane ClassManagePanelAnchor;
@@ -196,21 +205,12 @@ public class StockManageViewController implements Initializable {
     @FXML
     private TextField txtSupplierName;
 
-    EquipmentDAOImpl equipmentDAOImpl = new EquipmentDAOImpl();
-
-
-
 
 
     @FXML
     void cmbStatusOfEquipOnAction(ActionEvent event) {
 
     }
-
-
-    private final SupplierDAOImpl supplierDAOImpl = new SupplierDAOImpl();
-    private final SupplementDAOImpl supplementDAOImpl = new SupplementDAOImpl();
-
 
 
     @Override
@@ -262,7 +262,7 @@ public class StockManageViewController implements Initializable {
 
     private void loadEquipmentTable() throws SQLException {
 
-        ArrayList<EquipmentDTO> equipmentDTOS = equipmentDAOImpl.getAllEquipmentDetails();
+        ArrayList<EquipmentDTO> equipmentDTOS = equipmentBO.getAllEquipments();
         ObservableList<EquipmentTM> equipmentTMS = FXCollections.observableArrayList();
 
         for (EquipmentDTO equipmentDTO : equipmentDTOS){
@@ -299,7 +299,7 @@ public class StockManageViewController implements Initializable {
 
     private void loadNextEquipmentId() throws SQLException {
 
-            lblEquipId.setText(equipmentDAOImpl.getNextEquipmentId());
+            lblEquipId.setText(equipmentBO.generateNewEquipmentId());
 
     }
 
@@ -313,7 +313,7 @@ public class StockManageViewController implements Initializable {
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
         if (optionalButtonType.isPresent() && optionalButtonType.get()==ButtonType.YES){
-            boolean isDelete = equipmentDAOImpl.deleteEquipment(equipmentId);
+            boolean isDelete = equipmentBO.delete(equipmentId);
 
             if (isDelete){
                 new Alert(Alert.AlertType.INFORMATION,"Successful..");
@@ -490,7 +490,7 @@ public class StockManageViewController implements Initializable {
 
     private void loadSupplementTable() throws SQLException {
 
-        ArrayList<SupplementDTO> supplementDTOS = supplementDAOImpl.getAllSupplementDetails();
+        ArrayList<SupplementDTO> supplementDTOS = supplementBO.getAll();
         ObservableList<SupplementTM>  supplementTMS= FXCollections.observableArrayList();
 
         for (SupplementDTO supplementDTO : supplementDTOS){
@@ -528,7 +528,7 @@ public class StockManageViewController implements Initializable {
 
     private void loadNextSupplementId() throws SQLException {
 
-        lblSupplementId.setText(supplementDAOImpl.getNextSupplementId());
+        lblSupplementId.setText(supplementBO.generateId());
 
 
     }
@@ -718,14 +718,14 @@ public class StockManageViewController implements Initializable {
 
     private void loadNextSupplierId() throws SQLException {
 
-        String supplierId = supplierDAOImpl.getNextSupplierId();
+        String supplierId = supplierBO.generateId();
         lblSupplierId.setText(supplierId);
 
     }
 
     private void loadSupplierTable() throws SQLException {
 
-        ArrayList<SupplierDTO> supplierDTOS = supplierDAOImpl.getAllSupplierData();
+        ArrayList<SupplierDTO> supplierDTOS = supplierBO.getAll();
 
         ObservableList<SupplierTM> supplierTMS = FXCollections.observableArrayList();
 
@@ -776,7 +776,7 @@ public class StockManageViewController implements Initializable {
         String contact = txtSupplierContactInfo.getText();
         String address = txtSupplierAddress.getText();
 
-        boolean isUpdate = supplierDAOImpl.updateSupplier(new SupplierDTO(id,name,desc,contact,address));
+        boolean isUpdate = supplierBO.update(new SupplierDTO(id,name,desc,contact,address));
 
         if (isUpdate){
             refreshSupplierPage();
@@ -808,7 +808,7 @@ public class StockManageViewController implements Initializable {
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
         if (optionalButtonType.isPresent() && optionalButtonType.get()==ButtonType.YES){
-            boolean isDelete = supplierDAOImpl.deleteSupplier(supplierId);
+            boolean isDelete = supplierBO.delete(supplierId);
 
             if (isDelete){
                 new Alert(Alert.AlertType.INFORMATION,"Successful..");
@@ -836,7 +836,7 @@ public class StockManageViewController implements Initializable {
         String contact = txtSupplierContactInfo.getText();
         String address = txtSupplierAddress.getText();
 
-        boolean isSaved = supplierDAOImpl.saveSupplier(new SupplierDTO(id,name,desc,contact,address));
+        boolean isSaved = supplierBO.save(new SupplierDTO(id,name,desc,contact,address));
 
         if (isSaved){
             refreshSupplierPage();

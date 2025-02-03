@@ -51,5 +51,11 @@ public class ClassBOImpl implements ClassBO {
         return classDAO.update(new Cls(classDTO.getClassId(),classDTO.getEmployeeId(),classDTO.getClassName(),classDTO.getClassType()));
     }
 
+    @Override
+    public ClassDTO getClassEntityById(String classId) throws SQLException {
+        Cls cls = classDAO.getClassEntityById(classId);
+        return new ClassDTO(cls.getClassId(),cls.getEmployeeId(),cls.getClassName(),cls.getClassType());
+    }
+
 
 }

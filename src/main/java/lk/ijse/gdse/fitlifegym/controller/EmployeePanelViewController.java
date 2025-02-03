@@ -12,6 +12,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.gdse.fitlifegym.bo.BOFactory;
+import lk.ijse.gdse.fitlifegym.bo.custom.EmployeeBO;
 import lk.ijse.gdse.fitlifegym.dto.EmployeeDTO;
 import lk.ijse.gdse.fitlifegym.dto.tm.EmployeeTM;
 import lk.ijse.gdse.fitlifegym.dao.custom.impl.EmployeeDAOImpl;
@@ -24,6 +26,9 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class EmployeePanelViewController implements Initializable {
+
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getInstance().getBO(BOFactory.BOType.EMPLOYEE);
+
 
     @FXML
     private Button assignBtn;
@@ -99,7 +104,7 @@ public class EmployeePanelViewController implements Initializable {
 
 
 
-    EmployeeDAOImpl employeeDAOImpl = new EmployeeDAOImpl();
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -121,7 +126,7 @@ public class EmployeePanelViewController implements Initializable {
 
     public void loadEmployeeTableDate() throws SQLException {
 
-        ArrayList<EmployeeDTO> employeeDTOS = employeeDAOImpl.getAllEmployees();
+        ArrayList<EmployeeDTO> employeeDTOS = employeeBO.getAll();
 
         ObservableList<EmployeeTM> employeeTMS = FXCollections.observableArrayList();
 

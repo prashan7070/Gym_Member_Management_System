@@ -48,4 +48,10 @@ public class MemberBOImpl implements MemberBO {
     public boolean update(MemberDTO memberDTO) throws SQLException {
         return memberDAO.update(new Member(memberDTO.getMemberId(),memberDTO.getName(),memberDTO.getAge(),memberDTO.getAddress(),memberDTO.getJoinDate(),memberDTO.getEmail(),memberDTO.getContactInfo()));
     }
+
+    @Override
+    public MemberDTO getMemberEntityById(String memberId) throws SQLException {
+        Member member = memberDAO.getMemberEntityById(memberId);
+        return new MemberDTO(member.getMemberId(),member.getName(),member.getAge(),member.getAddress(),member.getJoinDate(),member.getEmail(),member.getContactInfo());
+    }
 }

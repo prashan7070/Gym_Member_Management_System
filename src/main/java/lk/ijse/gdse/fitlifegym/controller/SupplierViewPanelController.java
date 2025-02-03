@@ -10,6 +10,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.gdse.fitlifegym.bo.BOFactory;
+import lk.ijse.gdse.fitlifegym.bo.custom.EquipmentSupplyBO;
+import lk.ijse.gdse.fitlifegym.bo.custom.SupplierBO;
 import lk.ijse.gdse.fitlifegym.dto.EquipmentDTO;
 import lk.ijse.gdse.fitlifegym.dto.EquipmentSupplyDTO;
 import lk.ijse.gdse.fitlifegym.dto.SupplierDTO;
@@ -27,6 +30,9 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class SupplierViewPanelController implements Initializable {
+
+    EquipmentSupplyBO equipmentSupplyBO = (EquipmentSupplyBO) BOFactory.getInstance().getBO(BOFactory.BOType.EQUIPMENT_SUPPLY);
+    SupplierBO supplierBO = (SupplierBO) BOFactory.getInstance().getBO(BOFactory.BOType.SUPPLIER);
 
     @FXML
     private Button btnAddSupplier;
@@ -100,8 +106,6 @@ public class SupplierViewPanelController implements Initializable {
 
     private EquipmentDTO currentEquipmentDTO;
 
-    private final EquipmentSupplyDAOImpl equipmentSupplyDAOImpl = new EquipmentSupplyDAOImpl();
-
 
     public void setupCurrentEquipmentDTO(EquipmentDTO currentEquipmentDTO) {
         this.currentEquipmentDTO=currentEquipmentDTO;
@@ -143,7 +147,7 @@ public class SupplierViewPanelController implements Initializable {
 
         if (optionalButtonType.isPresent() && optionalButtonType.get()==ButtonType.YES){
 
-            boolean isSuccessful = equipmentSupplyDAOImpl.savePendingSupplyOrder(currentEquipmentDTO,new EquipmentSupplyDTO(
+            boolean isSuccessful = equipmentSupplyBO.savePendingSupplyOrder(currentEquipmentDTO,new EquipmentSupplyDTO(
 
                                                                                     orderId,
                                                                                     equipmentId,
@@ -180,8 +184,6 @@ public class SupplierViewPanelController implements Initializable {
     }
 
 
-
-    private final SupplierDAOImpl supplierDAOImpl = new SupplierDAOImpl();
 
     @FXML
     void onClickTable(MouseEvent event) {
@@ -240,7 +242,7 @@ public class SupplierViewPanelController implements Initializable {
 
     private void loadSupplierTable() throws SQLException {
 
-        ArrayList<SupplierDTO> supplierDTOS = supplierDAOImpl.getAllSupplierData();
+        ArrayList<SupplierDTO> supplierDTOS = supplierBO.getAll();
 
         ObservableList<SupplierTM> supplierTMS = FXCollections.observableArrayList();
 
@@ -266,7 +268,7 @@ public class SupplierViewPanelController implements Initializable {
 
     private void loadNextOrderId() throws SQLException {
 
-        lblOrderId.setText(equipmentSupplyDAOImpl.getNextOrderId());
+        lblOrderId.setText(equipmentSupplyBO.generateId());
 
     }
 
