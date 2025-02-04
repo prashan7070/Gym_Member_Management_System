@@ -380,8 +380,9 @@ public class SupplementSupplyViewPanelController implements Initializable {
                 double unit = Double.parseDouble(txtUnitCost.getText());
                 double delivery = Double.parseDouble(txtDeliveryCost.getText());
 
-                double total = (quantity * unit) + delivery;
+                double total = supplimentSupplyBO.getTotalCost(quantity,unit,delivery);
                 lblTotalCost.setText(String.format("%.2f", total));
+
             } catch (NumberFormatException e) {
                 showValidationAlert("Error calculating total cost. Please check your input.");
             }

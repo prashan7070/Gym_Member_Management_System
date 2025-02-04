@@ -59,9 +59,9 @@ public class LoginViewController  {
 
             try {
 
-                adminDto = loginBO.checkUserLoginInfo(username);
+                adminDto = loginBO.validateLogin(username,password);
 
-                if (adminDto!=null && adminDto.getPassword().equals(password)){
+                if (adminDto!=null){
 
                     Stage stage = (Stage) loginAnchor.getScene().getWindow();
                     stage.close();
@@ -108,8 +108,8 @@ public class LoginViewController  {
 
         String userName = txtUsername.getText();
         try {
-            AdminDto adminDto = loginBO.checkUserLoginInfo(userName);
-            if (adminDto != null) {
+
+            if (loginBO.isUsernameVlaid(userName)) {
                 txtUsername.setStyle(";-fx-border-color: null;");
                 txtPassword.requestFocus();
             } else {

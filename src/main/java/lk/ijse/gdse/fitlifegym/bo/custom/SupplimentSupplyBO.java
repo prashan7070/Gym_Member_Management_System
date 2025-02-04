@@ -22,4 +22,5 @@ public interface SupplimentSupplyBO extends SuperBO {
 
     boolean confirmSupplyOrder(SupplementSupplyDTO supplementSupplyDTO) throws SQLException;
 
+    double getTotalCost(int quantity, double unit, double delivery);
 }

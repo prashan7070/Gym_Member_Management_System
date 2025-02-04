@@ -214,5 +214,11 @@ public class SupplimentSupplyBOImpl implements SupplimentSupplyBO {
 
     }
 
+    @Override
+    public double getTotalCost(int quantity, double unit, double delivery) {
+        double total = (quantity * unit) + delivery;
+        return total;
+    }
+
 
 }

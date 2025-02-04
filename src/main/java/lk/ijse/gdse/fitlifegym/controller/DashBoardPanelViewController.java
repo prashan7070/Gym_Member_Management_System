@@ -9,6 +9,9 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
+import lk.ijse.gdse.fitlifegym.bo.custom.DashBoardBO;
+import lk.ijse.gdse.fitlifegym.bo.custom.LoginBO;
+import lk.ijse.gdse.fitlifegym.dao.DAOFactory;
 import lk.ijse.gdse.fitlifegym.dto.AdminDto;
 import lk.ijse.gdse.fitlifegym.dao.custom.impl.DashbordDAOImpl;
 
@@ -22,6 +25,8 @@ import java.time.ZoneId;
 
 
 public class DashBoardPanelViewController implements Initializable {
+
+    DashBoardBO dashBoardBO = (DashBoardBO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.DASHBOARD);
 
     @FXML
     private AnchorPane dashBoardPanelAnchor;
@@ -45,11 +50,6 @@ public class DashBoardPanelViewController implements Initializable {
     private Label timeLabel;
     private AdminDto adminDto;
 
-    private DashbordDAOImpl DASHBORD_MODEL;
-
-    public DashBoardPanelViewController(){
-        DASHBORD_MODEL = new DashbordDAOImpl();
-    }
 
     public void initialize(AdminDto adminDto) throws IOException {
         this.adminDto = adminDto;
@@ -90,7 +90,7 @@ public class DashBoardPanelViewController implements Initializable {
 
     private void getCountMembors() {
         try {
-            String i = String.valueOf(DASHBORD_MODEL.getCountMem());
+            String i = String.valueOf(dashBoardBO.getCountMem());
             lblCurrentMemberCount.setText(i);
         } catch (SQLException e) {
             System.out.println(e);
@@ -100,7 +100,7 @@ public class DashBoardPanelViewController implements Initializable {
 
     private void getCountBooking() {
         try {
-            String i = String.valueOf(DASHBORD_MODEL.getCountBooking());
+            String i = String.valueOf(dashBoardBO.getCountBooking());
             lblActiveBooking.setText(i);
         } catch (SQLException e) {
             System.out.println(e);
@@ -109,7 +109,7 @@ public class DashBoardPanelViewController implements Initializable {
 
     private void getCountSessions() {
         try {
-            String i = String.valueOf(DASHBORD_MODEL.getCountSessions());
+            String i = String.valueOf(dashBoardBO.getCountSessions());
             lblActiveSessionsCount.setText(i);
         } catch (SQLException e) {
             System.out.println(e);
