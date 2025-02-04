@@ -17,15 +17,12 @@ public class AttendanceDAOImpl implements AttendanceDAO {
 
                     if (rst.next()){
 
-                        String lastId = rst.getString(1);
-                        String subString = lastId.substring(1);
-                        int i = Integer.parseInt(subString);
-                        int newIndex = i+1;
-                        return String.format("A%03d",newIndex);
+                        return rst.getString(1);
+
 
                     }
 
-                    return "A001";
+                    return null;
 
 
         }

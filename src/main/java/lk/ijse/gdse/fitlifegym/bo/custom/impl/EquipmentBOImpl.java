@@ -50,7 +50,7 @@ public class EquipmentBOImpl implements EquipmentBO {
     public String generateNewEquipmentId() throws SQLException {
         String id = equipmentDAO.generateId();
         if (id!=null){
-            String subString = id.substring(1);
+            String subString = id.substring(2);
             int i = Integer.parseInt(subString);
             int newIndex = i+1;
             return String.format("EQ%03d",newIndex);

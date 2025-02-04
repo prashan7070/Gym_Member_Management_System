@@ -17,14 +17,11 @@ public class MemberDAOImpl implements MemberDAO {
         ResultSet rst = SQLUtil.execute("SELECT memberId FROM member ORDER BY memberId DESC LIMIT 1");
 
         if (rst.next()){
-            String lastId = rst.getString(1);
-            String subString = lastId.substring(1);
-            int i = Integer.parseInt(subString);
-            int newIndex = i+1;
-            return String.format("M%03d", newIndex);
+            return rst.getString(1);
+
         }
 
-        return "M001";
+        return null;
     }
 
 

@@ -17,10 +17,7 @@ public class PaymentDAOImpl implements PaymentDAO {
 
         if (rst.next()){
             return rst.getString(1);
-//            String subString = lastId.substring(1);
-//            int i = Integer.parseInt(subString);
-//            int newIndex = i+1;
-//            return String.format("P%03d",newIndex);
+
         }
 
         return null;

@@ -29,6 +29,7 @@ public class SupplimentSupplyBOImpl implements SupplimentSupplyBO {
         String id = supplementSupplyDAO.generateId();
 
         if (id!=null){
+
             String subString = id.substring(2);
             int i = Integer.parseInt(subString);
             int newIndex = i+1;

@@ -16,7 +16,18 @@ public class BookingBOImpl implements BookingBO {
 
     @Override
     public String generateBookingId() throws SQLException {
-        return bookingDAO.generateId();
+        String id = bookingDAO.generateId();
+
+        if (id!=null){
+
+            String subString = id.substring(1);
+            int i = Integer.parseInt(subString);
+            int newIndex = i+1;
+            return String.format("B%03d",newIndex);
+
+        }
+
+        return "B001";
     }
 
     @Override

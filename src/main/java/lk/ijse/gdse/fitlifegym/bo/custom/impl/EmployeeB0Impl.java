@@ -16,7 +16,18 @@ public class EmployeeB0Impl implements EmployeeBO {
 
     @Override
     public String generateId() throws SQLException {
-        return employeeDAO.generateId();
+        String id = employeeDAO.generateId();
+
+        if (id!=null){
+
+            String subString = id.substring(1);
+            int i = Integer.parseInt(subString);
+            int newIndex = i+1;
+            return String.format("E%03d",newIndex);
+
+        }
+
+        return "E001";
     }
 
     @Override

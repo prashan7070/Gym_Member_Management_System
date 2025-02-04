@@ -16,7 +16,18 @@ public class PaymentPlanBOImpl implements PaymentPlanBO {
 
     @Override
     public String generateId() throws SQLException {
-        return paymentPlanDAO.generateId();
+        String id = paymentPlanDAO.generateId();
+
+        if (id!=null){
+
+            String subString = id.substring(2);
+            int i = Integer.parseInt(subString);
+            int newIndex = i+1;
+            return String.format("PP%03d",newIndex);
+
+        }
+
+        return "PP001";
     }
 
     @Override

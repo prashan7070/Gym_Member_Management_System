@@ -16,7 +16,18 @@ public class AttendanceBOImpl implements AttendanceBO {
 
     @Override
     public String generateNewAttendanceId() throws SQLException {
-        return attendanceDAO.generateId();
+        String id = attendanceDAO.generateId();
+
+        if (id!=null){
+
+            String subString = id.substring(1);
+            int i = Integer.parseInt(subString);
+            int newIndex = i+1;
+            return String.format("A%03d",newIndex);
+
+        }
+
+        return "A001";
     }
 
     @Override

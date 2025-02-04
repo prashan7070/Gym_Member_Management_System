@@ -15,14 +15,12 @@ public class SupplierDAOImpl implements SupplierDAO {
             ResultSet rst = SQLUtil.execute("SELECT supplierId FROM supplier ORDER BY supplierId DESC LIMIT 1");
 
             if (rst.next()){
-                String lastId = rst.getString(1);
-                String subString = lastId.substring(2);
-                int i = Integer.parseInt(subString);
-                int newIndex = i+1;
-                return String.format("SU%03d",newIndex);
+
+                return rst.getString(1);
+
             }
 
-            return "SU001";
+            return null;
         }
 
 

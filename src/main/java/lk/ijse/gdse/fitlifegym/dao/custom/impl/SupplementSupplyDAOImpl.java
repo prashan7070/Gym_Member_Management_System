@@ -21,14 +21,10 @@ public class SupplementSupplyDAOImpl implements SupplementSupplyDAO {
         ResultSet rst = SQLUtil.execute("SELECT orderId FROM supplementsupplydetails ORDER BY orderId DESC LIMIT 1");
 
         if (rst.next()){
-            String lastId = rst.getString(1);
-            String subString = lastId.substring(2);
-            int i = Integer.parseInt(subString);
-            int newIndex = i+1;
-            return String.format("SS%03d",newIndex);
+            return rst.getString(1);
         }
 
-        return "SS001";
+        return null;
 
     }
 

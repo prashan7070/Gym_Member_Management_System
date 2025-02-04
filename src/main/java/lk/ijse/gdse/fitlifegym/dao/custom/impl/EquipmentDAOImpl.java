@@ -66,13 +66,10 @@ public class EquipmentDAOImpl implements EquipmentDAO {
             if (rst.next()){
                 String lastId = rst.getString(1);
                 return lastId;
-//                String subString = lastId.substring(2);
-//                int i = Integer.parseInt(subString);
-//                int newIndex = i+1;
-//                return String.format("EQ%03d",newIndex);
+
             }
 
-//            return "EQ001";
+
 
             return null;
         }

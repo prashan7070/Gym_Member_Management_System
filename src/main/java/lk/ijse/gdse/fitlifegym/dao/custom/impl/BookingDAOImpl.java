@@ -15,14 +15,11 @@ public class BookingDAOImpl implements BookingDAO {
                 ResultSet rst = SQLUtil.execute("SELECT bookingId FROM booking ORDER BY bookingId DESC LIMIT 1");
 
                 if (rst.next()){
-                      String lastId = rst.getString(1);
-                      String subString = lastId.substring(1);
-                      int i = Integer.parseInt(subString);
-                      int newIndex = i+1;
-                      return String.format("B%03d",newIndex);
+                      return rst.getString(1);
+
                 }
 
-                return "B001";
+                return null;
         }
 
         public ArrayList<Booking> getAll() throws SQLException {

@@ -17,7 +17,18 @@ public class MemberBOImpl implements MemberBO {
 
     @Override
     public String generateId() throws SQLException {
-        return memberDAO.generateId();
+        String id = memberDAO.generateId();
+
+        if (id!=null){
+
+            String subString = id.substring(1);
+            int i = Integer.parseInt(subString);
+            int newIndex = i+1;
+            return String.format("M%03d", newIndex);
+
+        }
+
+        return "M001";
     }
 
     @Override

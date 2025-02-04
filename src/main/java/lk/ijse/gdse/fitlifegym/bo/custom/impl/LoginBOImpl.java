@@ -20,7 +20,18 @@ public class LoginBOImpl implements LoginBO {
 
     @Override
     public String generateId() throws SQLException {
-        return adminDAO.generateId();
+        String id = adminDAO.generateId();
+
+        if (id!=null){
+
+            String substring = id.substring(1);
+            int i = Integer.parseInt(substring);
+            int newIdIndex = i + 1;
+            return String.format("U%03d", newIdIndex);
+
+        }
+
+        return "U001";
     }
 
     @Override

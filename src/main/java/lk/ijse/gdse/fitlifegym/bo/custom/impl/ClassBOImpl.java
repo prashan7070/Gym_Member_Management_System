@@ -22,7 +22,18 @@ public class ClassBOImpl implements ClassBO {
 
     @Override
     public String generateNewClassId() throws SQLException {
-        return classDAO.generateId();
+        String id = classDAO.generateId();
+
+        if (id!=null){
+
+            String subString = id.substring(1);
+            int i = Integer.parseInt(subString);
+            int newIndex = i+1;
+            return String.format("C%03d",newIndex);
+
+        }
+
+        return "C001";
     }
 
     @Override

@@ -17,6 +17,7 @@ public class SessionBOImpl implements SessionBO {
     @Override
     public String generateId() throws SQLException {
             String id =  sessionDAO.generateId();
+
             if (id!=null){
                 String subString = id.substring(1);
                 int i = Integer.parseInt(subString);

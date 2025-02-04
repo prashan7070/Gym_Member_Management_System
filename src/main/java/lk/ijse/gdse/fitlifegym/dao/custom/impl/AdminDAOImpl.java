@@ -60,14 +60,11 @@ public class AdminDAOImpl implements AdminDAO {
 
 
             if (rst.next()) {
-                String lastId = rst.getString(1);
-                String substring = lastId.substring(1);
-                int i = Integer.parseInt(substring);
-                int newIdIndex = i + 1;
-                return String.format("U%03d", newIdIndex);
+                return rst.getString(1);
+
             }
 
-        return "U001";
+        return null;
 
     }
 

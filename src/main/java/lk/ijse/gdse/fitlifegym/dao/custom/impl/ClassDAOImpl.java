@@ -17,16 +17,12 @@ public class ClassDAOImpl implements ClassDAO {
 
         if (rst.next()){
 
-            String lastId = rst.getString(1);
-            String subString = lastId.substring(1);
-            int i = Integer.parseInt(subString);
-            int newIndex = i+1;
-            return String.format("C%03d",newIndex);
+            return rst.getString(1);
 
 
         }
 
-        return "C001";
+        return null;
 
     }
 

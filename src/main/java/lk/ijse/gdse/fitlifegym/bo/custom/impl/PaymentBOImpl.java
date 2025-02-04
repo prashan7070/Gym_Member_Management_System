@@ -20,6 +20,7 @@ public class PaymentBOImpl implements PaymentBO {
     @Override
     public String generateId() throws SQLException {
         String id = paymentDAO.generateId();
+
         if (id!=null){
             String subString = id.substring(1);
             int i = Integer.parseInt(subString);

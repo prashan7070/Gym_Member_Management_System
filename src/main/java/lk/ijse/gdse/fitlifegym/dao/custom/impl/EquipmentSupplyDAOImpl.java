@@ -22,16 +22,6 @@ public class EquipmentSupplyDAOImpl implements EquipmentSupplyDAO {
 
         ResultSet rst = SQLUtil.execute("SELECT orderId FROM equipmentsupplydetails ORDER BY orderId DESC LIMIT 1");
 
-//        if (rst.next()){
-//            String lastId = rst.getString(1);
-//            String subString = lastId.substring(2);
-//            int i = Integer.parseInt(subString);
-//            int newIndex = i+1;
-//            return String.format("ES%03d",newIndex);
-//        }
-//
-//        return null;
-
         return rst.next() ? rst.getString(1) : null;
 
     }
