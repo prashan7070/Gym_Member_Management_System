@@ -5,10 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -48,7 +45,7 @@ public class LoginViewController  {
     @FXML
     private TextField txtUsername;
 
-    private AdminDto adminDto;
+//    private AdminDto adminDto;
 
 
     @FXML
@@ -59,7 +56,7 @@ public class LoginViewController  {
 
             try {
 
-                adminDto = loginBO.validateLogin(username,password);
+                 AdminDto adminDto = loginBO.validateLogin(username,password);
 
                 if (adminDto!=null){
 
@@ -76,6 +73,9 @@ public class LoginViewController  {
                     dashboardStage.getIcons().add(image);
                     dashboardStage.setScene(new Scene(dashboardRoot));
                     dashboardStage.show();
+
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Wrong credentials...!").show();
 
                 }
 

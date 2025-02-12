@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
+import lk.ijse.gdse.fitlifegym.bo.BOFactory;
 import lk.ijse.gdse.fitlifegym.bo.custom.DashBoardBO;
 import lk.ijse.gdse.fitlifegym.bo.custom.LoginBO;
 import lk.ijse.gdse.fitlifegym.dao.DAOFactory;
@@ -26,7 +27,7 @@ import java.time.ZoneId;
 
 public class DashBoardPanelViewController implements Initializable {
 
-    DashBoardBO dashBoardBO = (DashBoardBO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.DASHBOARD);
+    DashBoardBO dashBoardBO = (DashBoardBO) BOFactory.getInstance().getBO(BOFactory.BOType.DASHBOARD);
 
     @FXML
     private AnchorPane dashBoardPanelAnchor;
@@ -48,11 +49,9 @@ public class DashBoardPanelViewController implements Initializable {
 
     @FXML
     private Label timeLabel;
-    private AdminDto adminDto;
 
 
     public void initialize(AdminDto adminDto) throws IOException {
-        this.adminDto = adminDto;
 
 
         if (adminDto.getRole().equals("Trainer")){
